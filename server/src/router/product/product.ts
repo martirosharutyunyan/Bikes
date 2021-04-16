@@ -4,7 +4,7 @@ import Products from '../../sequelize/products';
 import { deleteImage, generateFile } from '../../tools/tools';
 const router = express.Router();
 
-router.use('/tools', require('./ProductsTools'))
+router.use('/tools', require('./productsTools'))
 
 router.get('/products:language', async (req, res):Promise<void>=>{
     try{
