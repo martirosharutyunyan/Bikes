@@ -1,0 +1,1 @@
+export type actionTypes = 'ADMINLOGIN' | 'LOAD' | 'PRODUCTS' | 'LANG'
