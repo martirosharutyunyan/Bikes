@@ -4,7 +4,7 @@ const router = express.Router();
         
 
 
-router.post('/buy', async (req, res) => {
+router.get('/buy', async (req, res) => {
     try {
         const { language, amount, description } = req.body 
         const requestBody = {
@@ -23,7 +23,7 @@ router.post('/buy', async (req, res) => {
     }
 })
 
-router.post('/success', async (req, res) => {
+router.get('/success', async (req, res) => {
     try {
         res.send({message:"success"})
     } catch(err) {
@@ -32,7 +32,7 @@ router.post('/success', async (req, res) => {
     }
 })
 
-router.post('/result', async (req, res) => {
+router.get('/result', async (req, res) => {
     try {
         res.send('OK')
     } catch(err) {
@@ -41,7 +41,7 @@ router.post('/result', async (req, res) => {
     }
 })
 
-router.post('/fail', async (req, res) => {
+router.get('/fail', async (req, res) => {
     try {
         res.send({message:"fail"})
     } catch(err) {
