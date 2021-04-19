@@ -72,16 +72,22 @@ const productColumns = {
 }
 
 export const payment = sequelize.define('users',{
-    PaymentID:{
-        type:DataTypes.STRING
-    },
-    opaque:{
+    OrderID:{
         type:DataTypes.STRING
     },
     name:{
         type:DataTypes.STRING
     },
     surname:{
+        type:DataTypes.STRING
+    },
+    description:{
+        type:DataTypes.STRING
+    },
+    Amount:{
+        type:DataTypes.STRING
+    },
+    PaymentID:{
         type:DataTypes.STRING
     }
 })
