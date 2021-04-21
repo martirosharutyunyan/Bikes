@@ -1,14 +1,12 @@
-import StreamTransport from "nodemailer/lib/stream-transport"
-import { DecimalDataType } from "sequelize/types"
 
-export type nodemailerMessageType = {
+export interface nodemailerMessageType {
     from: string
     to: string
     subject: string
     text:string
 }
 
-export type product = {
+export interface product  {
     oldPrice:string
     productName:string
     productType:string
@@ -23,7 +21,7 @@ export type product = {
     codeOfProduct:string
 }
 
-export type productsWithImage = product & {
+export interface productsWithImage extends product {
     id:number
     imagePath:string
     image:any
@@ -31,7 +29,7 @@ export type productsWithImage = product & {
     language:string
 }
 
-export type AmeriabankRequest = {
+export interface AmeriabankRequest {
     ClientID:string
     Username:string
     Password:string

@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
-
+require('dotenv').config()
 
 // export const sequelize = new Sequelize({
 //     host:process.env.MYSQLHOST,
@@ -8,7 +8,6 @@ import { Sequelize, DataTypes } from 'sequelize';
 //     database:process.env.MYSQLDATABASE,
 //     dialect:'mysql'
 // })
-
 export const sequelize = new Sequelize({
     username:process.env.POSTGRESDBUSERNAME,
     password:process.env.POSTGRESDBPASSWORD,
@@ -46,7 +45,7 @@ const productColumns = {
         type:DataTypes.STRING
     },
     promotions:{
-        type:DataTypes.STRING
+        type:DataTypes.BOOLEAN
     },
     discounts:{
         type:DataTypes.STRING
@@ -67,6 +66,9 @@ const productColumns = {
         type:DataTypes.STRING
     },
     priceOfMonth:{
+        type:DataTypes.STRING
+    },
+    hashteg:{
         type:DataTypes.STRING
     },
 }

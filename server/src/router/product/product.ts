@@ -48,7 +48,7 @@ router.post('/add',async (req, res):Promise<void>=>{
 
         const product = {
             ...data,
-            stars:'',
+            stars:'[]',
             language:req.body.language,
             imagePath:JSON.stringify(arr),
         }
