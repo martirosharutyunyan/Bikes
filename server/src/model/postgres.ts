@@ -1,16 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize';
 require('dotenv').config()
 
-<<<<<<< HEAD
-=======
-// export const sequelize = new Sequelize({
-//     host:process.env.MYSQLHOST,
-//     username:process.env.MYSQLUSERNAME,
-//     password:process.env.MYSQLPASSWORD,
-//     database:process.env.MYSQLDATABASE,
-//     dialect:'mysql'
-// })
->>>>>>> 53223d098f89adbf58f390110f41306fe1923881
+
 export const sequelize = new Sequelize({
     host:process.env.MYSQLHOST,
     username:process.env.MYSQLUSERNAME,
