@@ -88,16 +88,15 @@ const AdminPanel:FC = () => {
     const submit = async ():Promise<any> => {
         setload(true)
         const data = new FormData()
-        changeProducts.forEach(elem=>{
+        changeProducts.forEach(elem => {
             if (!elem.image) {
                 return 
             }
             for (let i:number = 0; i < elem.image.length; i++) {
-                console.log(elem.image[i])
-                data.append(`${elem.id}`,elem.image[i])
+                data.append(`${elem.id}`, elem.image[i])
             }
         })
-        data.append('data',JSON.stringify(changeProducts))
+        data.append('data', JSON.stringify(changeProducts))
         await axios.post('/product/edit',data)
         setload(false)
     }

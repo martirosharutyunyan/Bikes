@@ -45,7 +45,6 @@ router.post('/add',async (req, res):Promise<void>=>{
             // @ts-ignore
             arr = [...arr, generateFile(req.files[key].name, req.files[key].data)]
         }
-
         const product = {
             ...data,
             stars:'[]',
@@ -59,7 +58,6 @@ router.post('/add',async (req, res):Promise<void>=>{
         res.send({message:'error'})
     }
 })
-
 
 router.post('/edit', async (req, res):Promise<void>=>{
     try{
