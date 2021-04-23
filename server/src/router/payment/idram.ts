@@ -15,7 +15,7 @@ router.post('/buy', (req, res) => {
 })
 
 
-router.post('/success', (req, res) => {
+router.get('/success', (req, res) => {
     try {
         res.send({message:"success"})
     } catch(err) {
@@ -24,7 +24,7 @@ router.post('/success', (req, res) => {
     }
 })
 
-router.post('/result', (req, res) => {
+router.get('/result', (req, res) => {
     try {
         res.send('OK')
     } catch(err) {
@@ -33,7 +33,7 @@ router.post('/result', (req, res) => {
     }
 })
 
-router.post('/fail', (req, res) => {
+router.get('/fail', (req, res) => {
     try {
         res.send({message:"fail"})
     } catch(err) {

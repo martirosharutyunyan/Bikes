@@ -5,6 +5,7 @@ import { deleteImage, generateFile } from '../../tools/tools';
 const router = express.Router();
 
 router.use('/tools', require('./productsTools'))
+router.use('/', require('./search'))
 
 router.get('/products:language', async (req, res):Promise<void>=>{
     try{
