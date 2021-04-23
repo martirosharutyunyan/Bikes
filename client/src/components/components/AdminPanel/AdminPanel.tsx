@@ -9,12 +9,16 @@ const AdminPanel:FC = () => {
     const [load, setload] = useState(false);
     const [products, setproducts] = useState<any[]>([]);
     const [state, setstate] = useState<product>({
-        productName:'name',
+        productNameHY:'name',
+        productNameRU:'name',
+        productNameEN:'name',
         productType:'type',
         price:'3000',
         colors:'colors',
         sizes:'sizes',
-        description:'description',
+        descriptionRU:'description',
+        descriptionEN:'description',
+        descriptionHY:'description',
         promotions:false,
         discounts:'discounts',
         oldPrice:'oldPrice',
@@ -142,13 +146,17 @@ const AdminPanel:FC = () => {
             <section>
                 <button onClick={submit}>submit</button>
                 <div style={{marginTop:'2vw'}}>
-                    <input value={state.productName} placeholder='պռոդուկտի անունը' name='productName' onChange={changeValue} type="text"/>
+                    <input value={state.productNameHY} placeholder='պռոդուկտի անունը' name='productNameHY' onChange={changeValue} type="text"/>
+                    <input value={state.productNameEN} placeholder='պռոդուկտի անունը' name='productNameEN' onChange={changeValue} type="text"/>
+                    <input value={state.productNameRU} placeholder='պռոդուկտի անունը' name='productNameRU' onChange={changeValue} type="text"/>
                     <input value={state.productType} placeholder='պռոդուկտի տիպը' name='productType' onChange={changeValue} type="text"/>
                     <input value={state.price} placeholder='գին' name='price' onChange={changeValue} type="text"/>
                     <input value={state.colors} placeholder='գույն' name='colors' onChange={changeValue} type="text"/>
                     <input value={state.sizes} placeholder='չափեր' name='sizes' onChange={changeValue} type="text"/>
                     <input value={state.height} placeholder='height' name='height' onChange={changeValue} type='text'/>
-                    <input value={state.description} placeholder='նկարագություն' name='description' onChange={changeValue} type='text'/>
+                    <input value={state.descriptionHY} placeholder='նկարագություն' name='descriptionHY' onChange={changeValue} type='text'/>
+                    <input value={state.descriptionEN} placeholder='նկարագություն' name='descriptionEN' onChange={changeValue} type='text'/>
+                    <input value={state.descriptionRU} placeholder='նկարագություն' name='descriptionRU' onChange={changeValue} type='text'/>
                     promotions<input defaultChecked={!!state.promotions} placeholder='promotions' name='promotions' onChange={changeValue} type='checkbox'/>
                     <input value={state.discounts} placeholder='discounts' name='discounts' onChange={changeValue} type='text'/>
                     <input value={state.oldPrice} placeholder='oldPrice' name='oldPrice' onChange={changeValue} type='text'/>
@@ -158,23 +166,29 @@ const AdminPanel:FC = () => {
                     <input value={state.priceOfMonth} placeholder='priceOfMonth' name='priceOfMonth' onChange={changeValue} type='text'/>
                     <input value={state.hashteg} placeholder='hashteg' name='hashteg' onChange={changeValue} type='text'/>
                     <input placeholder='նկար' name='image' multiple onChange={setFile} type='file'/>
-                    <button onClick={AddProduct} disabled={state.productName.trim() && state.productType.trim() && state.price.trim()  && state.colors.trim() && state.sizes.trim() && image ? false : true}>ավելացնել ապրանք</button>
+                    <button onClick={AddProduct} disabled={state.productNameHY.trim() && state.productType.trim() && state.price.trim()  && state.colors.trim() && state.sizes.trim() && image ? false : true}>ավելացնել ապրանք</button>
                 </div>
                 <div style={{marginTop:'3vw'}} className='products'>
-                    {products.map((elem:productsWithImage,i)=> {
+                    {products.map((elem:productsWithImage, i)=> {
                         return (
                             <div key={i} style={{marginTop:'2vw',border:'1px solid black'}}>
                                 {/* @ts-ignore */}
-                                {JSON.parse(elem.imagePath).map((elem, i)=><img key={i} src={elem}/>)}
-                                <input value={elem.productName} defaultValue={elem.productName} onChange={(e:input) => changeProduct(e, elem)} name='productName' placeholder='անունը' type="text"/>
+                                {JSON.parse(elem.imagePath).map((elem, i) => <img key={i} src={elem}/>)}
+                                <img src={elem.banner} alt="error"/>
+                                <input value={elem.productNameHY} defaultValue={elem.productNameHY} onChange={(e:input) => changeProduct(e, elem)} name='productName' placeholder='անունը' type="text"/>
+                                <input value={elem.productNameEN} defaultValue={elem.productNameEN} onChange={(e:input) => changeProduct(e, elem)} name='productName' placeholder='անունը' type="text"/>
+                                <input value={elem.productNameRU} defaultValue={elem.productNameRU} onChange={(e:input) => changeProduct(e, elem)} name='productName' placeholder='անունը' type="text"/>
                                 <input value={elem.productType} defaultValue={elem.productType} onChange={(e:input) => changeProduct(e, elem)} name='productType' placeholder='պռոդուկտի անունը' type="text"/>
                                 <input value={elem.price} defaultValue={elem.price} onChange={(e:input) => changeProduct(e, elem)} name='price' placeholder='գինը' type="text"/>
                                 <input value={elem.colors} defaultValue={elem.colors} onChange={(e:input) => changeProduct(e, elem)} name='colors' placeholder='գույները' type="text"/>
                                 <input value={elem.sizes} defaultValue={elem.sizes} onChange={(e:input) => changeProduct(e, elem)} name='sizes' placeholder='չափերը' type="text"/>
                                 <input value={elem.height} defaultValue={elem.height} onChange={(e:input) => changeProduct(e, elem)} name='height' placeholder='չափերը' type="text"/>
-                                <input value={elem.description} defaultValue={elem.description} onChange={(e:input) => changeProduct(e, elem)} name='description' placeholder='նկարագրություն' type="text"/>
+                                <input value={elem.descriptionHY} defaultValue={elem.descriptionHY} onChange={(e:input) => changeProduct(e, elem)} name='description' placeholder='նկարագրություն' type="text"/>
+                                <input value={elem.descriptionEN} defaultValue={elem.descriptionEN} onChange={(e:input) => changeProduct(e, elem)} name='description' placeholder='նկարագրություն' type="text"/>
+                                <input value={elem.descriptionRU} defaultValue={elem.descriptionRU} onChange={(e:input) => changeProduct(e, elem)} name='description' placeholder='նկարագրություն' type="text"/>
                                 promotions<input defaultChecked={!!elem.promotions} onChange={(e:input) => changeProduct(e, elem)} type="checkbox" name='promotions'/>
                                 theBestProduct<input onChange={(e:input) => changeProduct(e, elem)} name='theBestProduct' defaultChecked={!!elem.theBestProduct} type="checkbox"/>
+                                banner <input value={elem.banner}  type="file"/> 
                                 <input value={elem.discounts} defaultValue={elem.discounts} onChange={(e:input) => changeProduct(e, elem)} name='discounts' placeholder='discounts' type="text"/>
                                 <input value={elem.oldPrice} defaultValue={elem.oldPrice} onChange={(e:input) => changeProduct(e, elem)} name='oldPrice' placeholder='oldPrice' type="text"/>
                                 <input value={elem.month} defaultValue={elem.month} onChange={(e:input) => changeProduct(e, elem)} name='month' placeholder='month' type="text"/>

@@ -1,13 +1,13 @@
 import { Reducer1Type } from "../redux/reducer/reducer"
 import { actionTypes } from "./actionsTypes"
 
-export type actionType = {
+export interface actionType {
     type:actionTypes
     payload:any
 }
 
 
-export type Redux = {
+export interface Redux {
     Reducer1:Reducer1Type
 }
 
@@ -17,15 +17,19 @@ export type button = React.MouseEvent<HTMLButtonElement>
 
 export type jsx = JSX.Element
 
-export type product = {
+export interface product {
     oldPrice:string
-    productName:string
+    productNameHY:string
+    productNameEN:string
+    productNameRU:string
     productType:string
     price:string
     colors:string
     sizes:string
     height:string
-    description:string
+    descriptionHY:string
+    descriptionEN:string
+    descriptionRU:string
     promotions:boolean
     discounts:string
     theBestProduct:boolean
@@ -35,8 +39,9 @@ export type product = {
     hashteg:string
 }
 
-export type productsWithImage = product & {
+export interface productsWithImage extends product {
     id:number
     imagePath:string[]
     image:any
+    banner:string
 }
