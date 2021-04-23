@@ -10,8 +10,11 @@ const Test: FC = () => {
     const [state, setState] = useState({
         name:'Մարտիրոս',
         surname:"Հարությունյան",
+    });
+    const [product, setproduct] = useState({
         productName:"հեծանիվ 1",
-        amount:"10"
+        price:10,
+        description:'dasdsadsa'
     });
     const [bank, setbank] = useState<boolean>(false);
     const [idram, setIdram] = useState({
@@ -23,7 +26,7 @@ const Test: FC = () => {
     }
     const language = useSelector((state:Redux) => state.Reducer1.language);
     const test = async () => {
-        const { data: { data } } = await axios.post('/payment/Ameriabank', state)
+        const { data: { data } } = await axios.post('/payment/Ameriabank', {user:state, product})
         window.location.href = `https://servicestest.ameriabank.am/VPOS/Payments/Pay?id=${data.PaymentID}&lang=${language}` 
     }
     const testIdram = async () => {
@@ -44,8 +47,6 @@ const Test: FC = () => {
                     <section className="">
                         <input name='name' onChange={changeValue} value={state.name} type="text" />
                         <input name='surname' onChange={changeValue} value={state.surname} type="text" />
-                        <input name='productName' onChange={changeValue} value={state.productName} type="text" />
-                        <input name='amount' onChange={changeValue} value={state.amount} type="text" />
                         <button onClick={test}>click</button>
                     </section>
                 :
@@ -59,6 +60,7 @@ const Test: FC = () => {
                             <input type="hidden" name="EDP_DESCRIPTION" value="Order description" />
                             <input type="hidden" name="EDP_AMOUNT" value="10" />
                             <input type="hidden" name="EDP_BILL_NO" value={Math.floor(Math.random()*100000)} />
+                            <input type="hidden" name='EDP_EMAIL' value='harutunyan.martiros@mail.ru'/>
                             <input type="submit" value="submit" />
                         </form> 
                     </section>

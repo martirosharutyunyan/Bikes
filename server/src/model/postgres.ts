@@ -1,6 +1,16 @@
 import { Sequelize, DataTypes } from 'sequelize';
+require('dotenv').config()
 
-
+<<<<<<< HEAD
+=======
+// export const sequelize = new Sequelize({
+//     host:process.env.MYSQLHOST,
+//     username:process.env.MYSQLUSERNAME,
+//     password:process.env.MYSQLPASSWORD,
+//     database:process.env.MYSQLDATABASE,
+//     dialect:'mysql'
+// })
+>>>>>>> 53223d098f89adbf58f390110f41306fe1923881
 export const sequelize = new Sequelize({
     host:process.env.MYSQLHOST,
     username:process.env.MYSQLUSERNAME,
@@ -46,7 +56,7 @@ const productColumns = {
         type:DataTypes.STRING
     },
     promotions:{
-        type:DataTypes.STRING
+        type:DataTypes.BOOLEAN
     },
     discounts:{
         type:DataTypes.STRING
@@ -69,19 +79,28 @@ const productColumns = {
     priceOfMonth:{
         type:DataTypes.STRING
     },
+    hashteg:{
+        type:DataTypes.STRING
+    },
 }
 
 export const payment = sequelize.define('users',{
-    PaymentID:{
-        type:DataTypes.STRING
-    },
-    opaque:{
+    OrderID:{
         type:DataTypes.STRING
     },
     name:{
         type:DataTypes.STRING
     },
     surname:{
+        type:DataTypes.STRING
+    },
+    description:{
+        type:DataTypes.STRING
+    },
+    Amount:{
+        type:DataTypes.STRING
+    },
+    PaymentID:{
         type:DataTypes.STRING
     }
 })
@@ -106,7 +125,7 @@ export const products = sequelize.define('products', productColumns)
 
 export const trash = sequelize.define('trash', productColumns)
 
-// Infos.sync({force:true})
-// payment.sync({force:true})
-// trash.sync({force:true})
-// products.sync({force:true})
+Infos.sync()
+payment.sync()
+trash.sync()
+products.sync()

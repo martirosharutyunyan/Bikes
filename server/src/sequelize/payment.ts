@@ -5,8 +5,8 @@ export class Users {
         await payment.create(args)
     };
 
-    static async getFromDB(PaymentID){
-        return await payment.findOne({where:{PaymentID}})
+    static async getFromDB(OrderID:string){
+        return await payment.findOne({where:{OrderID}})
     };
     
 }

@@ -13,9 +13,8 @@ function Routs():JSX.Element {
     return (
         <Suspense fallback={<Loader/>}>
             <Switch>
-                <Route exact path='/'><AmeriaBank/></Route>   
-                <Route path='/admin-login'><AdminLogin/></Route>
-                {/* <Route path='/admin-login'><AdminLogin/></Route> */}
+                <Route exact path='/'><AdminLogin/></Route>
+                {/* <Route exact path='/'><AmeriaBank/></Route> */}
                 { email ? <Route path='/admin'><AdminPanel/></Route> : null }
                 <Redirect to='/'/>
             </Switch>

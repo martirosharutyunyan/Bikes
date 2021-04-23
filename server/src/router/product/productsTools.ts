@@ -1,9 +1,9 @@
 import express from 'express';
 import { products } from '../../model/postgres';
 import Products from '../../sequelize/products';
-const app = express.Router();
+const router = express.Router();
         
-app.post('/sort',async (req, res):Promise<void>=>{
+router.post('/sort',async (req, res):Promise<void>=>{
     try{
         const { language, attribute } = req.body
         const data = await products.findAll({
@@ -20,7 +20,7 @@ app.post('/sort',async (req, res):Promise<void>=>{
 })
 
 
-app.post('/filter',async (req, res):Promise<void>=>{
+router.post('/filter',async (req, res):Promise<void>=>{
     try{
         const { language, attributes } = req.body
         const data = await products.findAll({
@@ -33,7 +33,7 @@ app.post('/filter',async (req, res):Promise<void>=>{
     }
 })
 
-app.post('/stars', async (req, res):Promise<void> => {
+router.post('/stars', async (req, res):Promise<void> => {
     try{
         // @ts-ignore
         await Products.updateStars(req.body)
@@ -44,5 +44,16 @@ app.post('/stars', async (req, res):Promise<void> => {
     }
 })
 
+router.get('/search:info', async (req, res) => {
+    try {
+        const { info } = req.params
+        console.log(info)
+        const data = await Products.search(info)
+        res.send({message:"ok", data})
+    } catch(err) {
+        console.log(err)
+        res.send({message:'error'})
+    }
+})
 
-module.exports = app;
+module.exports = router;

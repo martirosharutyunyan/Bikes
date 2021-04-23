@@ -26,12 +26,13 @@ export type product = {
     sizes:string
     height:string
     description:string
-    promotions:string
+    promotions:boolean
     discounts:string
     theBestProduct:boolean
     codeOfProduct:string
     month:string
     priceOfMonth:string
+    hashteg:string
 }
 
 export type productsWithImage = product & {
