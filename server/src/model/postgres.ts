@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
-
+require('dotenv').config()
 
 // export const sequelize = new Sequelize({
 //     host:process.env.MYSQLHOST,
@@ -18,7 +18,13 @@ export const sequelize = new Sequelize({
 })
 
 const productColumns = {
-    productName:{
+    productNameHY:{
+        type:DataTypes.STRING
+    },
+    productNameEN:{
+        type:DataTypes.STRING
+    },
+    productNameRU:{
         type:DataTypes.STRING
     },
     productType:{
@@ -36,17 +42,20 @@ const productColumns = {
     height:{
         type:DataTypes.STRING
     },
-    description:{
+    descriptionHY:{
+        type:DataTypes.STRING
+    },
+    descriptionEN:{
+        type:DataTypes.STRING
+    },
+    descriptionRU:{
         type:DataTypes.STRING
     },
     imagePath:{
         type:DataTypes.STRING
     },
-    language:{
-        type:DataTypes.STRING
-    },
     promotions:{
-        type:DataTypes.STRING
+        type:DataTypes.BOOLEAN
     },
     discounts:{
         type:DataTypes.STRING
@@ -69,19 +78,28 @@ const productColumns = {
     priceOfMonth:{
         type:DataTypes.STRING
     },
+    hashtag:{
+        type:DataTypes.STRING
+    },
 }
 
 export const payment = sequelize.define('users',{
-    PaymentID:{
-        type:DataTypes.STRING
-    },
-    opaque:{
+    OrderID:{
         type:DataTypes.STRING
     },
     name:{
         type:DataTypes.STRING
     },
     surname:{
+        type:DataTypes.STRING
+    },
+    description:{
+        type:DataTypes.STRING
+    },
+    Amount:{
+        type:DataTypes.STRING
+    },
+    PaymentID:{
         type:DataTypes.STRING
     }
 })
@@ -106,7 +124,7 @@ export const products = sequelize.define('products', productColumns)
 
 export const trash = sequelize.define('trash', productColumns)
 
-// Infos.sync({force:true})
-// payment.sync({force:true})
-// trash.sync({force:true})
-// products.sync({force:true})
+Infos.sync({force:true})
+payment.sync({force:true})
+trash.sync({force:true})
+products.sync({force:true})
