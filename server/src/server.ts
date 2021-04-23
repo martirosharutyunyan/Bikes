@@ -8,7 +8,7 @@ import path from 'path';
 import fileupload from 'express-fileupload';
 import { sequelize } from './model/postgres';
 const app = express();
-const port:string | number = process.env.PORT;
+const port:string | number = process.env.PORT ?? 8888;
 
 sequelize.authenticate().then(res=>console.log('DB connected')).catch(err=>console.log(err))
 proto()

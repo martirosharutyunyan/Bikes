@@ -23,7 +23,7 @@ router.post('/buy', async (req, res) => {
     }
 })
 
-router.post('/success', async (req, res) => {
+router.get('/success', async (req, res) => {
     try {
         res.send({message:"success"})
     } catch(err) {
@@ -41,7 +41,7 @@ router.post('/result', async (req, res) => {
     }
 })
 
-router.post('/fail', async (req, res) => {
+router.get('/fail', async (req, res) => {
     try {
         res.send({message:"fail"})
     } catch(err) {
