@@ -36,7 +36,7 @@ export interface product {
     codeOfProduct:string
     month:string
     priceOfMonth:string
-    hashteg:string
+    hashtag:string
 }
 
 export interface productsWithImage extends product {

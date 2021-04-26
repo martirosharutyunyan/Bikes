@@ -27,7 +27,7 @@ const AdminPanel:FC = () => {
         height:'height',
         month:'12',
         priceOfMonth:'21300',
-        hashteg:'hashteg'
+        hashtag:'hashteg'
     });
     const language = useSelector((state:Redux) => state.Reducer1.language);
     const [image, setimage] = useState<any[]>([]);
@@ -164,7 +164,7 @@ const AdminPanel:FC = () => {
                     theBestProduct<input name='theBestProduct' defaultChecked={!!state.theBestProduct} onChange={changeValue} type='checkbox'/>
                     <input value={state.month} placeholder='month' name='month' onChange={changeValue} type='text'/>
                     <input value={state.priceOfMonth} placeholder='priceOfMonth' name='priceOfMonth' onChange={changeValue} type='text'/>
-                    <input value={state.hashteg} placeholder='hashteg' name='hashteg' onChange={changeValue} type='text'/>
+                    <input value={state.hashtag} placeholder='hashteg' name='hashteg' onChange={changeValue} type='text'/>
                     <input placeholder='նկար' name='image' multiple onChange={setFile} type='file'/>
                     <button onClick={AddProduct} disabled={state.productNameHY.trim() && state.productType.trim() && state.price.trim()  && state.colors.trim() && state.sizes.trim() && image ? false : true}>ավելացնել ապրանք</button>
                 </div>
@@ -194,7 +194,7 @@ const AdminPanel:FC = () => {
                                 <input value={elem.month} defaultValue={elem.month} onChange={(e:input) => changeProduct(e, elem)} name='month' placeholder='month' type="text"/>
                                 <input value={elem.priceOfMonth} defaultValue={elem.priceOfMonth} onChange={(e:input) => changeProduct(e, elem)} name='priceOfMonth' placeholder='priceOfMonth' type="text"/>
                                 <input value={elem.codeOfProduct} defaultValue={elem.codeOfProduct} onChange={(e:input) => changeProduct(e, elem)} name='codeOfProduct' placeholder='codeOfProduct' type="text"/>
-                                <input value={elem.hashteg} defaultValue={elem.hashteg} onChange={(e:input) => changeProduct(e, elem)} name='hashteg' placeholder='hashteg' type="text"/>
+                                <input value={elem.hashtag} defaultValue={elem.hashtag} onChange={(e:input) => changeProduct(e, elem)} name='hashteg' placeholder='hashteg' type="text"/>
                                 <input multiple onChange={(e)=>changeProduct(e, elem, true)} name='image' type='file'/>
                                 <button onClick={Deleteproducts.bind(null,elem)}>click for delete</button>
                             </div>
