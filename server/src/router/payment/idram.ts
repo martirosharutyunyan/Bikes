@@ -23,7 +23,12 @@ router.post('/buy', async (req, res) => {
     }
 })
 
+<<<<<<< HEAD
+
+router.get('/success', (req, res) => {
+=======
 router.get('/success', async (req, res) => {
+>>>>>>> 4141e0e1f6641e3f9994b37e03281a48ccfe9e19
     try {
         res.send({message:"success"})
     } catch(err) {
@@ -32,7 +37,11 @@ router.get('/success', async (req, res) => {
     }
 })
 
+<<<<<<< HEAD
+router.get('/result', (req, res) => {
+=======
 router.post('/result', async (req, res) => {
+>>>>>>> 4141e0e1f6641e3f9994b37e03281a48ccfe9e19
     try {
         res.send('OK')
     } catch(err) {
@@ -41,7 +50,11 @@ router.post('/result', async (req, res) => {
     }
 })
 
+<<<<<<< HEAD
+router.get('/fail', (req, res) => {
+=======
 router.get('/fail', async (req, res) => {
+>>>>>>> 4141e0e1f6641e3f9994b37e03281a48ccfe9e19
     try {
         res.send({message:"fail"})
     } catch(err) {
