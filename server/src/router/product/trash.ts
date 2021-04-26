@@ -7,8 +7,8 @@ const router = express.Router();
 router.post('/addToTrash', async (req, res):Promise<void> => {
     try{
         const { product } = req.body
-        const { productName } = product
-        await Products.deleteProduct(productName)
+        const { codeOfProduct } = product
+        await Products.deleteProduct(codeOfProduct)
         await Trash.AddProduct(product)
         res.send('ok')
     } catch(err:any){
@@ -20,13 +20,13 @@ router.post('/addToTrash', async (req, res):Promise<void> => {
 router.post('/deleteFromTrash', async (req, res):Promise<void> => {
     try{
         const { product } = req.body
-        let { imagePath, productName } = product
+        let { imagePath, codeOfProduct } = product
         imagePath = JSON.parse(imagePath)
         console.log(imagePath)
         imagePath.forEach((elem:string) => {
             deleteImage(elem)
         })
-        Trash.deleteFromTrash(productName)
+        Trash.deleteFromTrash(codeOfProduct)
         res.send({message:"ok"}) 
     } catch(err:any){
         console.log(err)
@@ -47,9 +47,9 @@ router.get('/getTrashProducts', async (req, res):Promise<void> => {
 router.post('/recovery', async (req, res):Promise<void> => {
     try{
         const { product } = req.body
-        const { productName } = product
+        const { codeOfProduct } = product
         await Products.AddProduct(product)
-        await Trash.deleteFromTrash(productName)
+        await Trash.deleteFromTrash(codeOfProduct)
         res.send({message:"ok"})
     } catch(err:any){
         console.log(err)

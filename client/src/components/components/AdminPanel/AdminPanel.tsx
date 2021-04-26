@@ -27,7 +27,7 @@ const AdminPanel:FC = () => {
         height:'height',
         month:'12',
         priceOfMonth:'21300',
-        hashtag:'hashteg'
+        hashtag:'hashtag'
     });
     const language = useSelector((state:Redux) => state.Reducer1.language);
     const [image, setimage] = useState<any[]>([]);
@@ -53,8 +53,9 @@ const AdminPanel:FC = () => {
         setimage(e.target.files)
     }
     const getProducts = async ():Promise<any> => {
-        const { data } = await axios.get(`/product/products${language}`)
+        const { data } = await axios.get(`/product/products`)
         const data2 = await axios.get('/trash/getTrashProducts') 
+        console.log(data2)
         setproducts(data)
         setchangeProducts(data)
     }
@@ -68,6 +69,7 @@ const AdminPanel:FC = () => {
             arr = arr.map((el:productsWithImage)=>{
                 if(el.id === elem.id){
                     if(e.target.type === 'checkbox') {
+                        console.log(e.target.checked)
                         // @ts-ignore
                         el[e.target.name] = e.target.checked
                         return el
@@ -101,17 +103,17 @@ const AdminPanel:FC = () => {
             }
         })
         data.append('data', JSON.stringify(changeProducts))
-        await axios.post('/product/edit',data)
+        await axios.post('/product/edit', data)
         setload(false)
     }
     const AddProduct = async () =>{
         setload(true)
         const data = new FormData()
         data.append('data', JSON.stringify(state))
-        data.append('language', language)
         for (let i:number = 0; i < image.length; i++) {
-            data.append(`product_image${i}`,image[i])
+            data.append(`product_image${i}`, image[i])
         }
+
         await axios.post('/product/add', data)
         setload(false)
     }
@@ -122,16 +124,16 @@ const AdminPanel:FC = () => {
         setload(false)
     }
     const changeLanguage = async (e:any):Promise<any> => {
-        dispatch({type:'LANG',payload:e.target.name})
+        dispatch({type:'LANG', payload:e.target.name})
     }
     const search = async (e:input) => {
         const { value } = e.target
         if (!value) { 
-            const { data } = await axios.get(`/product/products${language}`)
+            const { data } = await axios.get(`/product/products`)
             setproducts(data)  
             return 
         }
-        const { data:{data} } = await axios.get(`/product/tools/search${value}`)
+        const { data:{data} } = await axios.get(`/product/tools/search?info=${value}`)
         setproducts(data)
     }
     if(load){
@@ -164,7 +166,7 @@ const AdminPanel:FC = () => {
                     theBestProduct<input name='theBestProduct' defaultChecked={!!state.theBestProduct} onChange={changeValue} type='checkbox'/>
                     <input value={state.month} placeholder='month' name='month' onChange={changeValue} type='text'/>
                     <input value={state.priceOfMonth} placeholder='priceOfMonth' name='priceOfMonth' onChange={changeValue} type='text'/>
-                    <input value={state.hashtag} placeholder='hashteg' name='hashteg' onChange={changeValue} type='text'/>
+                    <input value={state.hashtag} placeholder='hashtag' name='hashtag' onChange={changeValue} type='text'/>
                     <input placeholder='նկար' name='image' multiple onChange={setFile} type='file'/>
                     <button onClick={AddProduct} disabled={state.productNameHY.trim() && state.productType.trim() && state.price.trim()  && state.colors.trim() && state.sizes.trim() && image ? false : true}>ավելացնել ապրանք</button>
                 </div>
@@ -174,21 +176,19 @@ const AdminPanel:FC = () => {
                             <div key={i} style={{marginTop:'2vw',border:'1px solid black'}}>
                                 {/* @ts-ignore */}
                                 {JSON.parse(elem.imagePath).map((elem, i) => <img key={i} src={elem}/>)}
-                                <img src={elem.banner} alt="error"/>
-                                <input value={elem.productNameHY} defaultValue={elem.productNameHY} onChange={(e:input) => changeProduct(e, elem)} name='productName' placeholder='անունը' type="text"/>
-                                <input value={elem.productNameEN} defaultValue={elem.productNameEN} onChange={(e:input) => changeProduct(e, elem)} name='productName' placeholder='անունը' type="text"/>
-                                <input value={elem.productNameRU} defaultValue={elem.productNameRU} onChange={(e:input) => changeProduct(e, elem)} name='productName' placeholder='անունը' type="text"/>
+                                <input value={elem.productNameHY} defaultValue={elem.productNameHY} onChange={(e:input) => changeProduct(e, elem)} name='productNameHY' placeholder='անունը' type="text"/>
+                                <input value={elem.productNameEN} defaultValue={elem.productNameEN} onChange={(e:input) => changeProduct(e, elem)} name='productNameEN' placeholder='անունը' type="text"/>
+                                <input value={elem.productNameRU} defaultValue={elem.productNameRU} onChange={(e:input) => changeProduct(e, elem)} name='productNameRU' placeholder='անունը' type="text"/>
                                 <input value={elem.productType} defaultValue={elem.productType} onChange={(e:input) => changeProduct(e, elem)} name='productType' placeholder='պռոդուկտի անունը' type="text"/>
                                 <input value={elem.price} defaultValue={elem.price} onChange={(e:input) => changeProduct(e, elem)} name='price' placeholder='գինը' type="text"/>
                                 <input value={elem.colors} defaultValue={elem.colors} onChange={(e:input) => changeProduct(e, elem)} name='colors' placeholder='գույները' type="text"/>
                                 <input value={elem.sizes} defaultValue={elem.sizes} onChange={(e:input) => changeProduct(e, elem)} name='sizes' placeholder='չափերը' type="text"/>
                                 <input value={elem.height} defaultValue={elem.height} onChange={(e:input) => changeProduct(e, elem)} name='height' placeholder='չափերը' type="text"/>
-                                <input value={elem.descriptionHY} defaultValue={elem.descriptionHY} onChange={(e:input) => changeProduct(e, elem)} name='description' placeholder='նկարագրություն' type="text"/>
-                                <input value={elem.descriptionEN} defaultValue={elem.descriptionEN} onChange={(e:input) => changeProduct(e, elem)} name='description' placeholder='նկարագրություն' type="text"/>
-                                <input value={elem.descriptionRU} defaultValue={elem.descriptionRU} onChange={(e:input) => changeProduct(e, elem)} name='description' placeholder='նկարագրություն' type="text"/>
-                                promotions<input defaultChecked={!!elem.promotions} onChange={(e:input) => changeProduct(e, elem)} type="checkbox" name='promotions'/>
+                                <input value={elem.descriptionHY} defaultValue={elem.descriptionHY} onChange={(e:input) => changeProduct(e, elem)} name='descriptionHY' placeholder='նկարագրություն' type="text"/>
+                                <input value={elem.descriptionEN} defaultValue={elem.descriptionEN} onChange={(e:input) => changeProduct(e, elem)} name='descriptionEN' placeholder='նկարագրություն' type="text"/>
+                                <input value={elem.descriptionRU} defaultValue={elem.descriptionRU} onChange={(e:input) => changeProduct(e, elem)} name='descriptionRU' placeholder='նկարագրություն' type="text"/>
+                                promotions<input onChange={(e:input) => changeProduct(e, elem)} name='promotions' defaultChecked={!!elem.promotions} type="checkbox"/>
                                 theBestProduct<input onChange={(e:input) => changeProduct(e, elem)} name='theBestProduct' defaultChecked={!!elem.theBestProduct} type="checkbox"/>
-                                banner <input value={elem.banner}  type="file"/> 
                                 <input value={elem.discounts} defaultValue={elem.discounts} onChange={(e:input) => changeProduct(e, elem)} name='discounts' placeholder='discounts' type="text"/>
                                 <input value={elem.oldPrice} defaultValue={elem.oldPrice} onChange={(e:input) => changeProduct(e, elem)} name='oldPrice' placeholder='oldPrice' type="text"/>
                                 <input value={elem.month} defaultValue={elem.month} onChange={(e:input) => changeProduct(e, elem)} name='month' placeholder='month' type="text"/>

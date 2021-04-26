@@ -44,10 +44,10 @@ router.post('/stars', async (req, res):Promise<void> => {
     }
 })
 
-router.get('/search:info', async (req, res) => {
+router.get('/search', async (req, res) => {
     try {
-        const { info } = req.params
-        console.log(info)
+        const { info } = req.query
+        // @ts-ignore
         const data = await Products.search(info)
         res.send({message:"ok", data})
     } catch(err) {

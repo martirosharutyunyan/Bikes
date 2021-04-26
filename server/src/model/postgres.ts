@@ -124,7 +124,7 @@ export const products = sequelize.define('products', productColumns)
 
 export const trash = sequelize.define('trash', productColumns)
 
-Infos.sync({force:true})
-payment.sync({force:true})
-trash.sync({force:true})
-products.sync({force:true})
+Infos.sync()
+payment.sync()
+trash.sync()
+products.sync()

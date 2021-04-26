@@ -6,6 +6,7 @@ import Loader from '../components/Loader/Loader';
 const AdminPanel = lazy(()=> import('../components/AdminPanel/AdminPanel'))
 const AdminLogin = lazy(()=> import('../components/AdminLogin/AdminLogin'))
 const AmeriaBank = lazy(()=> import('../components/Test/AmeriaBank'))
+const Banners = lazy(() => import('../components/AdminPanel/Banners'))
 {/* {window.location.href = 'https://facebook.com'}  */}
 
 function Routs():JSX.Element {
@@ -13,7 +14,8 @@ function Routs():JSX.Element {
     return (
         <Suspense fallback={<Loader/>}>
             <Switch>
-                <Route exact path='/'><AdminLogin/></Route>
+                <Route exact path='/'><Banners/></Route>
+                {/* <Route exact path='/'><AdminLogin/></Route> */}
                 {/* <Route exact path='/'><AmeriaBank/></Route> */}
                 { email ? <Route path='/admin'><AdminPanel/></Route> : null }
                 <Redirect to='/'/>
