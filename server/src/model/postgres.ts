@@ -83,7 +83,7 @@ const productColumns = {
     },
 }
 
-export const payment = sequelize.define('users',{
+export const Ameriabank = sequelize.define('ameriabank',{
     OrderID:{
         type:DataTypes.STRING
     },
@@ -101,7 +101,31 @@ export const payment = sequelize.define('users',{
     },
     PaymentID:{
         type:DataTypes.STRING
+    },
+    codeOfProduct:{
+        type:DataTypes.STRING
     }
+})
+
+export const Idram = sequelize.define('idram', {
+    name:{
+        type:DataTypes.STRING
+    },
+    surname:{
+        type:DataTypes.STRING
+    },
+    description:{
+        type:DataTypes.STRING
+    },
+    Amount:{
+        type:DataTypes.STRING
+    },
+    codeOfProduct:{
+        type:DataTypes.STRING
+    },
+    BILL_NO:{
+        type:DataTypes.INTEGER
+    },
 })
 
 
@@ -121,10 +145,10 @@ export const Infos = sequelize.define('Infos',{
 })
 
 export const products = sequelize.define('products', productColumns)
-
 export const trash = sequelize.define('trash', productColumns)
 
 Infos.sync()
-payment.sync()
+Ameriabank.sync()
+Idram.sync()
 trash.sync()
 products.sync()

@@ -23,7 +23,6 @@ let Banner:FC = () => {
             <img src={`${process.env.REACT_APP_API}/banner1.jpg`} alt="error"/>
             <input multiple onChange={changeTheBanners} name='firstBanner' type="file"/>
             <input onChange={changeTheBanners} value={banners.firstBannerText} name='firstBannerText' type="text"/>
-
             <img src={`${process.env.REACT_APP_API}/banner2.jpg`} alt="error"/>
             <input multiple onChange={changeTheBanners} name='secondBanner' type="file"/>
             <input onChange={changeTheBanners} value={banners.secondBannerText} name='secondBannerText' type="text"/>

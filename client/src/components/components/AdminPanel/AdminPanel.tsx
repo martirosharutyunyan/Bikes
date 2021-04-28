@@ -106,6 +106,7 @@ const AdminPanel:FC = () => {
         await axios.post('/product/edit', data)
         setload(false)
     }
+
     const AddProduct = async () =>{
         setload(true)
         const data = new FormData()

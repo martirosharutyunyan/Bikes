@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { FC, lazy, Suspense } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Redux } from '../typescript/types';
@@ -9,14 +9,14 @@ const AmeriaBank = lazy(()=> import('../components/Test/AmeriaBank'))
 const Banners = lazy(() => import('../components/AdminPanel/Banners'))
 {/* {window.location.href = 'https://facebook.com'}  */}
 
-function Routs():JSX.Element {
+const Routs:FC = () => {
     const email = useSelector((state:Redux) => state.Reducer1.AdminEmail)
     return (
         <Suspense fallback={<Loader/>}>
             <Switch>
                 <Route exact path='/'><Banners/></Route>
-                {/* <Route exact path='/'><AdminLogin/></Route> */}
                 {/* <Route exact path='/'><AmeriaBank/></Route> */}
+                {/* <Route exact path='/'><AdminLogin/></Route> */}
                 { email ? <Route path='/admin'><AdminPanel/></Route> : null }
                 <Redirect to='/'/>
             </Switch>

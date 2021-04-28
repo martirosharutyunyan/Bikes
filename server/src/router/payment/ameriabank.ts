@@ -7,7 +7,7 @@ const { AMERIAPASSWORD, AMERIACLIENTID, AMERIAAPI, AMERIAUSERNAME, AMERIAGETSTAT
 
 router.post('/', async (req, res):Promise<void> => {
     try{        
-        const { user: { name, surname }, product: { productName, price:Amount, description } } = req.body
+        const { user: { name, surname }, product: { productName, price:Amount, description, codeOfProduct } } = req.body
         const OrderID = 2380801 + Math.floor(Math.random() * 500)
         const requestData:AmeriabankRequest = {
             OrderID,
@@ -19,7 +19,7 @@ router.post('/', async (req, res):Promise<void> => {
             BackURL:"http://localhost:8888/api/payment/Ameriabank/get",
         }
         const { data } = await axios.post(AMERIAAPI, requestData)
-        Users.saveToDB({description, OrderID, Amount, name, surname, PaymentID:data.PaymentID})
+        Users.saveToDB({description, OrderID, Amount, name, surname, PaymentID:data.PaymentID, codeOfProduct})
         res.send({data, message:'ok'})
     } catch(err:any) {
         console.log(err)

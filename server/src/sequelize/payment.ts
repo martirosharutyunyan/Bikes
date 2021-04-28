@@ -1,12 +1,12 @@
-import { payment } from "../model/postgres";
+import { Ameriabank } from "../model/postgres";
 
 export class Users {
     static async saveToDB(args){
-        await payment.create(args)
+        await Ameriabank.create(args)
     };
 
     static async getFromDB(OrderID:string){
-        return await payment.findOne({where:{OrderID}})
+        return await Ameriabank.findOne({where:{OrderID}})
     };
     
 }

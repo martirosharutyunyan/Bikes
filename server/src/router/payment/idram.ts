@@ -1,3 +1,4 @@
+import { Idram } from './../../model/postgres';
 import axios from 'axios';
 import express, { response } from 'express';
 const router = express.Router();
@@ -6,16 +7,8 @@ const router = express.Router();
 
 router.post('/buy', async (req, res) => {
     try {
-        const { language, amount, description } = req.body 
-        const requestBody = {
-            EDP_LANGUAGE:language.toUpperCase(),
-            EDP_REC_ACCOUNT:process.env.EDP_REC_ACCOUNT,
-            EDP_DESCRIPTION:description,
-            EDP_AMOUNT:amount,
-            EDP_BILL_NO:Math.floor(Math.random() * 10000000),
-        }
-        const { data } = await axios.post(process.env.IDRAM_API, requestBody)
-        console.log(data)
+        const { product:{ description, price:Amount, codeOfProduct }, BILL_NO, user:{ name, surname } } = req.body
+        Idram.create({ description, Amount, codeOfProduct, BILL_NO, surname, name }) 
         res.send({message:'ok'})
     } catch(err) {
         console.log(err)
@@ -23,12 +16,7 @@ router.post('/buy', async (req, res) => {
     }
 })
 
-<<<<<<< HEAD
-
-router.get('/success', (req, res) => {
-=======
 router.get('/success', async (req, res) => {
->>>>>>> 4141e0e1f6641e3f9994b37e03281a48ccfe9e19
     try {
         res.send({message:"success"})
     } catch(err) {
@@ -37,12 +25,13 @@ router.get('/success', async (req, res) => {
     }
 })
 
-<<<<<<< HEAD
-router.get('/result', (req, res) => {
-=======
 router.post('/result', async (req, res) => {
->>>>>>> 4141e0e1f6641e3f9994b37e03281a48ccfe9e19
     try {
+        const data = await Idram.findOne({where: {BILL_NO:req.body.EDP_BILL_NO}})
+        if (!data) {
+            res.send({message:'error'})
+            return 
+        }
         res.send('OK')
     } catch(err) {
         console.log(err)
@@ -50,11 +39,7 @@ router.post('/result', async (req, res) => {
     }
 })
 
-<<<<<<< HEAD
-router.get('/fail', (req, res) => {
-=======
 router.get('/fail', async (req, res) => {
->>>>>>> 4141e0e1f6641e3f9994b37e03281a48ccfe9e19
     try {
         res.send({message:"fail"})
     } catch(err) {
