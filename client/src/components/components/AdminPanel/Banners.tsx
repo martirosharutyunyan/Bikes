@@ -30,4 +30,5 @@ let Banner:FC = () => {
     )
 }
 
+
 export default Banner = memo(Banner);
