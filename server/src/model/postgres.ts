@@ -8,7 +8,9 @@ require('dotenv').config()
 //     database:process.env.MYSQLDATABASE,
 //     dialect:'mysql'
 // })
-
+const STRING = () => ({ type: DataTypes.STRING })
+const BOOLEAN = () => ({ type: DataTypes.BOOLEAN })
+const INTEGER = () => ({ type: DataTypes.INTEGER })
 export const sequelize = new Sequelize({
     username:process.env.POSTGRESDBUSERNAME,
     password:process.env.POSTGRESDBPASSWORD,
@@ -18,137 +20,68 @@ export const sequelize = new Sequelize({
 })
 
 const productColumns = {
-    productNameHY:{
-        type:DataTypes.STRING
-    },
-    productNameEN:{
-        type:DataTypes.STRING
-    },
-    productNameRU:{
-        type:DataTypes.STRING
-    },
-    productType:{
-        type:DataTypes.STRING
-    },
-    price:{
-        type:DataTypes.INTEGER
-    },
-    colors:{
-        type:DataTypes.STRING
-    },
-    sizes:{
-        type:DataTypes.STRING
-    },
-    height:{
-        type:DataTypes.STRING
-    },
-    descriptionHY:{
-        type:DataTypes.STRING
-    },
-    descriptionEN:{
-        type:DataTypes.STRING
-    },
-    descriptionRU:{
-        type:DataTypes.STRING
-    },
-    imagePath:{
-        type:DataTypes.STRING
-    },
-    promotions:{
-        type:DataTypes.BOOLEAN
-    },
-    discounts:{
-        type:DataTypes.STRING
-    },
-    oldPrice:{
-        type:DataTypes.STRING
-    },
-    codeOfProduct:{
-        type:DataTypes.STRING
-    },
-    theBestProduct:{
-        type:DataTypes.BOOLEAN
-    },
-    stars:{
-        type:DataTypes.STRING
-    },
-    month:{
-        type:DataTypes.STRING
-    },
-    priceOfMonth:{
-        type:DataTypes.STRING
-    },
-    hashtag:{
-        type:DataTypes.STRING
-    },
+    productNameHY:STRING(),
+    productNameEN:STRING(),
+    productNameRU:STRING(),
+    productType:STRING(),
+    price:INTEGER(),
+    colors:STRING(),
+    sizes:STRING(),
+    height:STRING(),
+    descriptionHY:STRING(),
+    descriptionEN:STRING(),
+    descriptionRU:STRING(),
+    imagePath:STRING(),
+    promotions:BOOLEAN(),
+    discounts:STRING(),
+    oldPrice:STRING(),
+    codeOfProduct:STRING(),
+    theBestProduct:BOOLEAN(),
+    stars:STRING(),
+    month:STRING(),
+    priceOfMonth:STRING(),
+    hashtag:STRING(),
 }
 
 export const Ameriabank = sequelize.define('ameriabank',{
-    OrderID:{
-        type:DataTypes.STRING
-    },
-    name:{
-        type:DataTypes.STRING
-    },
-    surname:{
-        type:DataTypes.STRING
-    },
-    description:{
-        type:DataTypes.STRING
-    },
-    Amount:{
-        type:DataTypes.STRING
-    },
-    PaymentID:{
-        type:DataTypes.STRING
-    },
-    codeOfProduct:{
-        type:DataTypes.STRING
-    }
+    name:STRING(),
+    surname:STRING(),
+    address:STRING(),
+    phoneNumber:STRING(),
+    email:STRING(),
+    description:STRING(),
+    Amount:STRING(),
+    paymentID:STRING(),
+    codeOfProduct:STRING(),
+    paymentStatus:BOOLEAN()
 })
 
 export const Idram = sequelize.define('idram', {
-    name:{
-        type:DataTypes.STRING
-    },
-    surname:{
-        type:DataTypes.STRING
-    },
-    description:{
-        type:DataTypes.STRING
-    },
-    Amount:{
-        type:DataTypes.STRING
-    },
-    codeOfProduct:{
-        type:DataTypes.STRING
-    },
-    BILL_NO:{
-        type:DataTypes.INTEGER
-    },
+    name:STRING(),
+    surname:STRING(),
+    address:STRING(),
+    phoneNumber:STRING(),
+    email:STRING(),
+    description:STRING(),
+    Amount:STRING(),
+    codeOfProduct:STRING(),
+    BILL_NO:INTEGER(),
+    paymentStatus:BOOLEAN()
 })
 
 
 export const Infos = sequelize.define('Infos',{
-    name:{
-        type:DataTypes.STRING
-    },
-    info_hy:{
-        type:DataTypes.STRING
-    },
-    info_en:{
-        type:DataTypes.STRING
-    },
-    info_ru:{
-        type:DataTypes.STRING
-    },
+    name:STRING(),
+    info_hy:STRING(),
+    info_en:STRING(),
+    info_ru:STRING(),
 })
 
 export const products = sequelize.define('products', productColumns)
 export const trash = sequelize.define('trash', productColumns)
 
 Infos.sync()
-Ameriabank.sync()
-Idram.sync()
+Ameriabank.sync({force:true})
+Idram.sync({force:true})
 trash.sync()
 products.sync()
