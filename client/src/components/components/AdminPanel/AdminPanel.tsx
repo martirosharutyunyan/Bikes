@@ -36,15 +36,9 @@ const AdminPanel:FC = () => {
         console.log(state)
         const target = e.target
         setstate(prev=>{
-            if(target.type === 'checkbox'){
-                return {
-                    ...state,
-                    [target.name]:target.checked
-                }
-            }
             return {
                 ...state,
-                [target.name]:target.value,
+                [target.name]:target.type === 'checkbox' ? target.checked : target.value
             }
         })
     }

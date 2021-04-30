@@ -12,9 +12,10 @@ const Test:FC = () => {
     });
     const [billNo, setbillNo] = useState<number>(Math.floor(Math.random() * 10000000));
     const [products, setproduct] = useState([{
+        price:1,
         codeOfProduct:"հեծանիվ 1",
-        price:10,
-        description:'dasdsadsa'
+        description:'dasdsadsa',
+        productName:'dsadsa',
     }]);
     const [bank, setbank] = useState<boolean>(true);
     const [idram, setIdram] = useState({
@@ -27,7 +28,7 @@ const Test:FC = () => {
     const language = useSelector((state:Redux) => state.Reducer1.language);
     const test = async () => {
         const { data: { PaymentID } } = await axios.post('/payment/Ameriabank', {user:state, products});
-        window.location.href = `https://servicestest.ameriabank.am/VPOS/Payments/Pay?id=${PaymentID}&lang=${language}`; 
+        window.location.href = `https://services.ameriabank.am/VPOS/Payments/Pay?id=${PaymentID}&lang=${language}`; 
     }
     const IdramOnchange = async (e:input) => {
         setIdram({

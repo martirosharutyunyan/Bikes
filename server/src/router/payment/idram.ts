@@ -32,7 +32,7 @@ router.post('/result', async (req, res) => {
             res.send({message:'error'})
             return 
         }
-        res.send('OK')
+        res.status(200).send('OK')
     } catch(err) {
         console.log(err)
         res.send({message:"error"})

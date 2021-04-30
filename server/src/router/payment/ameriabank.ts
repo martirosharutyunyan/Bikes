@@ -8,8 +8,11 @@ const { AMERIAPASSWORD, AMERIACLIENTID, AMERIAAPI, AMERIAUSERNAME } = process.en
 router.post('/', async (req, res):Promise<void> => {
     try{        
         const { user, products } = req.body
-        const OrderID = 2380801 + Math.floor(Math.random() * 500)
-        const Amount = products.reduce((a, b) => a.price + b.price)
+        const OrderID = 2380801 + Math.floor(Math.random() * 5000000)
+        let Amount = 0
+        for (let i:number = 0; i < products.length; i++) {
+            Amount += products[i].price
+        }
         let Description = []
         const codeOfProducts = products.map(elem => {
             Description = [...Description, elem.productName]
@@ -22,13 +25,14 @@ router.post('/', async (req, res):Promise<void> => {
             ClientID:AMERIACLIENTID,
             Username:AMERIAUSERNAME,
             Password:AMERIAPASSWORD,
-            BackURL:"http://46.4.249.19:8888/api/payment/Ameriabank/get",
+            // BackURL:"http://46.4.249.19:8888/api/payment/Ameriabank/get",
+            BackURL:"http://localhost:8888/api/payment/Ameriabank/get",
         }
-        const { data:{ PaymentID } } = await axios.post(AMERIAAPI, requestData)
-        await Ameriabank.create({description:Description, Amount, ...user, paymentID:PaymentID, codeOfProducts, paymentStatus:false})
-        res.send({message:'ok',PaymentID})
+        const { data:{PaymentID} } = await axios.post(AMERIAAPI, requestData)
+        await Ameriabank.create({description:JSON.stringify(Description), Amount, ...user, paymentID:PaymentID, codeOfProducts:JSON.stringify(codeOfProducts), paymentStatus:false})
+        res.send({message:'ok', PaymentID})
     } catch(err:any) {
-        console.log(err)
+        // console.log(err)
         res.send({message:'error'})
     }
 })
@@ -37,11 +41,14 @@ router.get('/get', async (req:any, res)=>{
     try{
         let { resposneCode, paymentID } = req.query;
         paymentID = paymentID.toUpperCase()
+        console.log(req.query)
         if (resposneCode !== '00') {
-            return res.redirect('https://hecanivclub.am/Ameriabank/fail')
+            // return res.redirect('https://hecanivclub.am/Ameriabank/fail')
+            return res.redirect('http://localhost:3000/Ameriabank/fail')
         }
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
-        res.redirect(`https://hecanivclub.am/Ameriabank/success/${paymentID}`)
+        // res.redirect(`https://hecanivclub.am/Ameriabank/success/${paymentID}`)
+        res.redirect(`http://localhost:3000/Ameriabank/success/${paymentID}`)
     } catch(err){
         console.log(err)
         res.send({message:"error"})

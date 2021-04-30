@@ -8,6 +8,7 @@ const AdminLogin = lazy(()=> import('../components/AdminLogin/AdminLogin'))
 const AmeriaBank = lazy(()=> import('../components/Test/AmeriaBank'))
 const Banners = lazy(() => import('../components/AdminPanel/Banners'))
 const AmeriabankSuccessPage = lazy(() => import('../components/Test/AmeriabankSuccess'))
+const AmeriabankFailPage = lazy(() => import('../components/Test/AmeriaBankFail'))
 {/* {window.location.href = 'https://facebook.com'}  */}
 
 const Routs:FC = () => {
@@ -19,6 +20,7 @@ const Routs:FC = () => {
                 <Route exact path='/'><AmeriaBank/></Route>
                 {/* <Route exact path='/'><AdminLogin/></Route> */}
                 <Route path='/Ameriabank/success/:data'><AmeriabankSuccessPage/></Route>
+                <Route path='/Ameriabank/fail'><AmeriabankSuccessPage/></Route>
                 { email ? <Route path='/admin'><AdminPanel/></Route> : null }
                 <Redirect to='/'/>
             </Switch>

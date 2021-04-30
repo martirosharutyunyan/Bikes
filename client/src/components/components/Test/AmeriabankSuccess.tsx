@@ -20,7 +20,7 @@ const SuccessPage:FC = () => {
     }, []);
     return (
         <>
-
+            ok
         </>
     )
 }
