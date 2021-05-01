@@ -10,7 +10,7 @@ export default class Products {
         return await products.findAll();
     };
 
-    static async deleteProduct(codeOfProduct:string):Promise<void> {
+        static async deleteProduct(codeOfProduct:string):Promise<void> {
         await products.destroy({where: {codeOfProduct}});    
     };
 
@@ -22,11 +22,11 @@ export default class Products {
         await products.update(args, {where:{codeOfProduct}});
     };
 
-    static async updateStars({productCode, count}):Promise<any> {
-        const dataStr:any = await products.findOne({where:{productCode}});
+    static async updateStars({codeOfProduct, count}):Promise<any> {
+        const dataStr:any = await products.findOne({where:{codeOfProduct}});
         const { stars } = JSON.parse(JSON.stringify(dataStr));
         let array = [...JSON.parse(stars), count];
-        await products.update({stars:JSON.stringify(array)}, {where:{productCode}});
+        await products.update({stars:JSON.stringify(array)}, {where:{codeOfProduct}});
     };
 
     static async search(info:string):Promise<any> {

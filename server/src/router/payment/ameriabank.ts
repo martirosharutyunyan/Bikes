@@ -25,8 +25,8 @@ router.post('/', async (req, res):Promise<void> => {
             ClientID:AMERIACLIENTID,
             Username:AMERIAUSERNAME,
             Password:AMERIAPASSWORD,
-            // BackURL:"http://46.4.249.19:8888/api/payment/Ameriabank/get",
-            BackURL:"http://localhost:8888/api/payment/Ameriabank/get",
+            BackURL:"http://46.4.249.19:8888/api/payment/Ameriabank/get",
+            // BackURL:"http://localhost:8888/api/payment/Ameriabank/get",
         }
         const { data:{PaymentID} } = await axios.post(AMERIAAPI, requestData)
         await Ameriabank.create({description:JSON.stringify(Description), Amount, ...user, paymentID:PaymentID, codeOfProducts:JSON.stringify(codeOfProducts), paymentStatus:false})
@@ -43,12 +43,12 @@ router.get('/get', async (req:any, res)=>{
         paymentID = paymentID.toUpperCase()
         console.log(req.query)
         if (resposneCode !== '00') {
-            // return res.redirect('https://hecanivclub.am/Ameriabank/fail')
-            return res.redirect('http://localhost:3000/Ameriabank/fail')
+            return res.redirect('https://hecanivclub.am/Ameriabank/fail')
+            // return res.redirect('http://localhost:3000/Ameriabank/fail')
         }
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
-        // res.redirect(`https://hecanivclub.am/Ameriabank/success/${paymentID}`)
-        res.redirect(`http://localhost:3000/Ameriabank/success/${paymentID}`)
+        res.redirect(`https://hecanivclub.am/Ameriabank/success/${paymentID}`)
+        // res.redirect(`http://localhost:3000/Ameriabank/success/${paymentID}`)
     } catch(err){
         console.log(err)
         res.send({message:"error"})

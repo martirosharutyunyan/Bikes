@@ -1,19 +1,9 @@
 import { Sequelize, DataTypes } from 'sequelize';
 require('dotenv').config()
 
-<<<<<<< HEAD
-=======
-// export const sequelize = new Sequelize({
-//     host:process.env.MYSQLHOST,
-//     username:process.env.MYSQLUSERNAME,
-//     password:process.env.MYSQLPASSWORD,
-//     database:process.env.MYSQLDATABASE,
-//     dialect:'mysql'
-// })
 const STRING = () => ({ type: DataTypes.STRING })
 const BOOLEAN = () => ({ type: DataTypes.BOOLEAN })
 const INTEGER = () => ({ type: DataTypes.INTEGER })
->>>>>>> 62ef80b4c77935771db1747ab07220d3d1d66356
 
 export const sequelize = new Sequelize({
     host:process.env.MYSQLHOST,
@@ -92,8 +82,8 @@ export const Infos = sequelize.define('Infos',{
 export const products = sequelize.define('products', productColumns)
 export const trash = sequelize.define('trash', productColumns)
 
-Infos.sync()
-Ameriabank.sync()
-Idram.sync()
-trash.sync()
-products.sync()
+Infos.sync({force:true})
+Ameriabank.sync({force:true})
+Idram.sync({force:true})
+trash.sync({force:true})
+products.sync({force:true})
