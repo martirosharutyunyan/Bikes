@@ -5,21 +5,21 @@ const STRING = () => ({ type: DataTypes.STRING })
 const BOOLEAN = () => ({ type: DataTypes.BOOLEAN })
 const INTEGER = () => ({ type: DataTypes.INTEGER })
 
-export const sequelize = new Sequelize({
-    host:process.env.MYSQLHOST,
-    username:process.env.MYSQLUSERNAME,
-    password:process.env.MYSQLPASSWORD,
-    database:process.env.MYSQLDATABASE,
-    dialect:'mysql'
-})
-
 // export const sequelize = new Sequelize({
-//     username:process.env.POSTGRESDBUSERNAME,
-//     password:process.env.POSTGRESDBPASSWORD,
-//     database:process.env.POSTGRESDBNAME,
-//     dialect:'postgres',
-//     logging:false
+//     host:process.env.MYSQLHOST,
+//     username:process.env.MYSQLUSERNAME,
+//     password:process.env.MYSQLPASSWORD,
+//     database:process.env.MYSQLDATABASE,
+//     dialect:'mysql'
 // })
+
+export const sequelize = new Sequelize({
+    username:process.env.POSTGRESDBUSERNAME,
+    password:process.env.POSTGRESDBPASSWORD,
+    database:process.env.POSTGRESDBNAME,
+    dialect:'postgres',
+    logging:false
+})
 
 const productColumns = {
     productNameHY:STRING(),
