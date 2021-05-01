@@ -8,17 +8,24 @@ export interface nodemailerMessageType {
 
 export interface product  {
     oldPrice:string
-    productName:string
+    productNameHY:string
+    productNameEN:string
+    productNameRU:string
     productType:string
     price:string
     colors:string
     sizes:string
     height:string
-    description:string
-    promotions:string
+    descriptionHY:string
+    descriptionEN:string
+    descriptionRU:string
+    promotions:boolean
     discounts:string
     theBestProduct:boolean
     codeOfProduct:string
+    month:string
+    priceOfMonth:string
+    hashtag:string
 }
 
 export interface productsWithImage extends product {

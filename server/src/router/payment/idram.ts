@@ -1,21 +1,23 @@
-import axios from 'axios';
-import express, { response } from 'express';
+import { Idram } from './../../model/postgres';
+import express from 'express';
+import Products from '../../sequelize/products';
 const router = express.Router();
         
 
 
 router.get('/buy', async (req, res) => {
     try {
-        const { language, amount, description } = req.body 
-        const requestBody = {
-            EDP_LANGUAGE:language.toUpperCase(),
-            EDP_REC_ACCOUNT:process.env.EDP_REC_ACCOUNT,
-            EDP_DESCRIPTION:description,
-            EDP_AMOUNT:amount,
-            EDP_BILL_NO:Math.floor(Math.random() * 10000000),
+        const { products, BILL_NO, user } = req.body
+        let Amount = 0
+        for (let i:number = 0; i < products.length; i++) {
+            Amount += products[i].price
         }
-        const { data } = await axios.post(process.env.IDRAM_API, requestBody)
-        console.log(data)
+        let Description = []
+        const codeOfProducts = products.map(elem => {
+            Description = [...Description, elem.productName]
+            return elem.codeOfProduct
+        })
+        Idram.create({ description:JSON.stringify(Description, null, 2), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user }) 
         res.send({message:'ok'})
     } catch(err) {
         console.log(err)
@@ -25,7 +27,8 @@ router.get('/buy', async (req, res) => {
 
 router.get('/success', async (req, res) => {
     try {
-        res.send({message:"success"})
+        await Idram.update({paymentStatus:true}, {where:{BILL_NO:req.query.EDP_BILL_NO}})
+        res.redirect(`https://hecanivclub.am/Idram/success/${req.query.EDP_BILL_NO}`)
     } catch(err) {
         console.log(err)
         res.send({message:"error"})
@@ -34,6 +37,11 @@ router.get('/success', async (req, res) => {
 
 router.get('/result', async (req, res) => {
     try {
+        const data = await Idram.findOne({where: {BILL_NO:req.body.EDP_BILL_NO}})
+        if (!data) {
+            res.send({message:'error'})
+            return 
+        }
         res.send('OK')
     } catch(err) {
         console.log(err)
@@ -43,11 +51,27 @@ router.get('/result', async (req, res) => {
 
 router.get('/fail', async (req, res) => {
     try {
-        res.send({message:"fail"})
+        res.redirect(`https://hecanivclub.am/Idram/fail`)
     } catch(err) {
         console.log(err)
         res.send({message:"error"})
     }
 })
+
+router.get('/getStatus', async (req, res):Promise<any> => {
+    try{
+        const { BILL_NO } = req.query
+        const data = await Idram.findOne({where:{BILL_NO}})
+        if (!data) {
+            return res.send({message:"error"});
+        }
+        const { codeOfProduct }:any = data
+        const product = await Products.findProduct(codeOfProduct)
+        res.send({message:"ok", product})
+    } catch(err:any){
+        console.log(err);
+        res.send({message: 'error'})
+    }
+});
 
 module.exports = router;

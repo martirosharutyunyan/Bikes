@@ -44,10 +44,10 @@ router.post('/stars', async (req, res):Promise<void> => {
     }
 })
 
-router.get('/search:info', async (req, res) => {
+router.get('/search', async (req, res) => {
     try {
-        const { info } = req.params
-        console.log(info)
+        const { info } = req.query
+        // @ts-ignore
         const data = await Products.search(info)
         res.send({message:"ok", data})
     } catch(err) {
@@ -55,5 +55,16 @@ router.get('/search:info', async (req, res) => {
         res.send({message:'error'})
     }
 })
+
+router.get('/find', async (req, res):Promise<void> => {
+    try{
+        const { codeOfProduct }:any = req.query
+        const data = await Products.findProduct(codeOfProduct)
+        res.send({data});
+    } catch(err:any){
+        console.log(err);
+        res.send({message: 'error'})
+    }
+});
 
 module.exports = router;

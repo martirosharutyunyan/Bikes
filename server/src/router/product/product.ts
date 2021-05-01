@@ -5,11 +5,11 @@ import { deleteImage, generateFile } from '../../tools/tools';
 const router = express.Router();
 
 router.use('/tools', require('./productsTools'))
+router.use('/', require('./search'))
 
-router.get('/products:language', async (req, res):Promise<void>=>{
+router.get('/products', async (req, res):Promise<void>=>{
     try{
-        const { language } = req.params
-        const data = await Products.getProducts(language)  
+        const data = await Products.getProducts()  
         res.send(data)
     } catch(err:any){
         console.log(err)
@@ -17,25 +17,17 @@ router.get('/products:language', async (req, res):Promise<void>=>{
     }
 })
 
-router.post('/find', async (req, res) => {
-    try {
-        const { productName } = req.body
-        const data = await Products.findProduct(productName)
-        res.send({data})
-    } catch(err) {
-        console.log(err)
-        res.send({message:"error"})
-    }
-})  
+
 
 router.post('/add',async (req, res):Promise<void>=>{
     try{
         // @ts-ignore
         let arr = []
         const { data:dataStr } = req.body
+        console.log(dataStr)
         const data:product = JSON.parse(dataStr)
-        const { productName } = data
-        const areThere = await Products.findProduct(productName)
+        const { codeOfProduct } = data
+        const areThere = await Products.findProduct(codeOfProduct)
         if(areThere){
             res.send({message:'this product is already registered'})
             return 
@@ -48,7 +40,6 @@ router.post('/add',async (req, res):Promise<void>=>{
         const product = {
             ...data,
             stars:'[]',
-            language:req.body.language,
             imagePath:JSON.stringify(arr),
         }
         Products.AddProduct(product)
@@ -63,11 +54,12 @@ router.post('/edit', async (req, res):Promise<void>=>{
     try{
         let arr = []
         const data = JSON.parse(req.body.data)
+        console.log(data)
         // @ts-ignore
         const files = req.files
         if(files){
             for (let key in files) {
-                arr = [...arr, {id:key,img:files[key]}]
+                arr = [...arr, {id:key, img:files[key]}]
             }
         }
         arr = arr.map(elem=>{
@@ -75,10 +67,10 @@ router.post('/edit', async (req, res):Promise<void>=>{
                 if(!elem.img.length){
                     return {
                         id:+elem.id,
-                        imagePath:[generateFile(elem.img.name,elem.img.data)]
+                        imagePath:[generateFile(elem.img.name, elem.img.data)]
                     }
                 }
-                const urls = elem.img.map(image=>generateFile(image.name,image.data))
+                const urls = elem.img.map(image => generateFile(image.name,image.data))
                 return {
                     id:+elem.id,
                     imagePath:urls
@@ -96,14 +88,14 @@ router.post('/edit', async (req, res):Promise<void>=>{
                 delete obj.id
                 delete obj.createdAt
                 delete obj.updatedAt
-                Products.updateProduct(obj, elem.id)
+                Products.updateProduct(obj, elem.codeOfProduct)
                 return 
             }
             const obj = {...elem,  price:+elem.price}
             delete obj.id
             delete obj.createdAt
             delete obj.updatedAt
-            Products.updateProduct(obj, elem.id)
+            Products.updateProduct(obj, elem.codeOfProduct)
         })
         res.send({message:"ok"})
     } catch(err:any){
