@@ -17,8 +17,8 @@ const Routs:FC = () => {
         <Suspense fallback={<Loader/>}>
             <Switch>
                 {/* <Route exact path='/'><Banners/></Route> */}
-                <Route exact path='/'><AmeriaBank/></Route>
-                {/* <Route exact path='/'><AdminLogin/></Route> */}
+                {/* <Route exact path='/'><AmeriaBank/></Route> */}
+                <Route exact path='/'><AdminLogin/></Route>
                 <Route path='/Ameriabank/success/:data'><AmeriabankSuccessPage/></Route>
                 <Route path='/Ameriabank/fail'><AmeriabankSuccessPage/></Route>
                 { email ? <Route path='/admin'><AdminPanel/></Route> : null }

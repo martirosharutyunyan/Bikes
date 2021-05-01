@@ -56,4 +56,15 @@ router.get('/search', async (req, res) => {
     }
 })
 
+router.get('/find', async (req, res):Promise<void> => {
+    try{
+        const { codeOfProduct }:any = req.query
+        const data = await Products.findProduct(codeOfProduct)
+        res.send({data});
+    } catch(err:any){
+        console.log(err);
+        res.send({message: 'error'})
+    }
+});
+
 module.exports = router;

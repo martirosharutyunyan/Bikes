@@ -11,6 +11,7 @@ require('dotenv').config()
 const STRING = () => ({ type: DataTypes.STRING })
 const BOOLEAN = () => ({ type: DataTypes.BOOLEAN })
 const INTEGER = () => ({ type: DataTypes.INTEGER })
+
 export const sequelize = new Sequelize({
     username:process.env.POSTGRESDBUSERNAME,
     password:process.env.POSTGRESDBPASSWORD,

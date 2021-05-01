@@ -48,6 +48,7 @@ const AdminPanel:FC = () => {
     }
     const getProducts = async ():Promise<any> => {
         const { data } = await axios.get(`/product/products`)
+        console.log(data)
         const data2 = await axios.get('/trash/getTrashProducts') 
         console.log(data2)
         setproducts(data)
