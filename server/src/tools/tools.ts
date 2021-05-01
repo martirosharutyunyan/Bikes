@@ -72,11 +72,13 @@ export const generateFile = (imageName: string, data:any):string => {
     const random = Math.random() 
     const img_path = path.join(__dirname,'../../public')
     writeFile(`${img_path}/random${random}.${extension}`, data).catch(err=>console.log(err))    
-    return `http://localhost:8888/random${random}.${extension}`
+    // return `public/random${random}.${extension}`
+    return `http://46.4.249.19:8888/random${random}.${extension}`;
 }
 
 export const deleteImage = (pathToImage:string) => {
     const img_path = path.join(__dirname,'../../public')
+    // const image = pathToImage.slice(7)
     const image = pathToImage.slice(22)
     unlink(`${img_path}/${image}`).catch(err=>console.log(err))
 }
