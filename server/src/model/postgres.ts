@@ -21,7 +21,7 @@ export const sequelize = new Sequelize({
     logging:false
 })
 
-const productColumns = {
+export const productColumns = {
     productNameHY:STRING(),
     productNameEN:STRING(),
     productNameRU:STRING(),
@@ -34,7 +34,6 @@ const productColumns = {
     descriptionEN:STRING(),
     descriptionRU:STRING(),
     imagePath:STRING(),
-    promotions:BOOLEAN(),
     discounts:STRING(),
     oldPrice:STRING(),
     codeOfProduct:STRING(),
@@ -81,9 +80,15 @@ export const Infos = sequelize.define('Infos',{
 
 export const products = sequelize.define('products', productColumns)
 export const trash = sequelize.define('trash', productColumns)
+export const promotions = sequelize.define('promotions',{
+    name:STRING(),
+    url:STRING()
+})
 
-Infos.sync({force:true})
-Ameriabank.sync({force:true})
-Idram.sync({force:true})
-trash.sync({force:true})
-products.sync({force:true})
+// Infos.sync({force:true})
+// Ameriabank.sync({force:true})
+// Idram.sync({force:true})
+// trash.sync({force:true})
+// products.sync({force:true})
+// promotions.sync({force:true})
+
