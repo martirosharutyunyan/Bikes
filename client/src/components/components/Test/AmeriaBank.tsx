@@ -1,8 +1,6 @@
-import React, { useState, useEffect, memo, FC,  } from "react";
+import React, { useState, memo, FC,  } from "react";
 import axios from "../../Axios/AxiosPost";
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-//types
+import { useSelector } from 'react-redux';
 import { input, Redux } from "../../typescript/types";
 
 const Test:FC = () => {
