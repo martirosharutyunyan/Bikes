@@ -3,8 +3,6 @@ import express from 'express';
 import Products from '../../sequelize/products';
 const router = express.Router();
         
-
-
 router.get('/buy', async (req, res) => {
     try {
         const { products, BILL_NO, user } = req.body
@@ -17,7 +15,7 @@ router.get('/buy', async (req, res) => {
             Description = [...Description, elem.productName]
             return elem.codeOfProduct
         })
-        Idram.create({ description:JSON.stringify(Description, null, 2), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user }) 
+        Idram.create({ description:JSON.stringify(Description), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user }) 
         res.send({message:'ok'})
     } catch(err) {
         console.log(err)

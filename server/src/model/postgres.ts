@@ -5,23 +5,23 @@ const STRING = () => ({ type: DataTypes.STRING })
 const BOOLEAN = () => ({ type: DataTypes.BOOLEAN })
 const INTEGER = () => ({ type: DataTypes.INTEGER })
 
-export const sequelize = new Sequelize({
-    host:process.env.MYSQLHOST,
-    username:process.env.MYSQLUSERNAME,
-    password:process.env.MYSQLPASSWORD,
-    database:process.env.MYSQLDATABASE,
-    dialect:'mysql'
-})
-
 // export const sequelize = new Sequelize({
-//     username:process.env.POSTGRESDBUSERNAME,
-//     password:process.env.POSTGRESDBPASSWORD,
-//     database:process.env.POSTGRESDBNAME,
-//     dialect:'postgres',
-//     logging:false
+//     host:process.env.MYSQLHOST,
+//     username:process.env.MYSQLUSERNAME,
+//     password:process.env.MYSQLPASSWORD,
+//     database:process.env.MYSQLDATABASE,
+//     dialect:'mysql'
 // })
 
-const productColumns = {
+export const sequelize = new Sequelize({
+    username:process.env.POSTGRESDBUSERNAME,
+    password:process.env.POSTGRESDBPASSWORD,
+    database:process.env.POSTGRESDBNAME,
+    dialect:'postgres',
+    logging:false
+})
+
+export const productColumns = {
     productNameHY:STRING(),
     productNameEN:STRING(),
     productNameRU:STRING(),
@@ -34,7 +34,6 @@ const productColumns = {
     descriptionEN:STRING(),
     descriptionRU:STRING(),
     imagePath:STRING(),
-    promotions:BOOLEAN(),
     discounts:STRING(),
     oldPrice:STRING(),
     codeOfProduct:STRING(),
@@ -81,9 +80,23 @@ export const Infos = sequelize.define('Infos',{
 
 export const products = sequelize.define('products', productColumns)
 export const trash = sequelize.define('trash', productColumns)
+export const promotions = sequelize.define('promotions',{
+    name:STRING(),
+    url:STRING()
+})
 
+// Infos.sync({force:true})
+// Ameriabank.sync({force:true})
+// Idram.sync({force:true})
+// trash.sync({force:true})
+// products.sync({force:true})
+// promotions.sync({force:true})
+
+<<<<<<< HEAD
 Infos.sync()
 Ameriabank.sync()
 Idram.sync()
 trash.sync()
 products.sync()
+=======
+>>>>>>> 63e203fab2a40e721cef0c04de783e3fe33d5b14

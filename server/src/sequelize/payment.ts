@@ -1,6 +1,6 @@
 import { Ameriabank } from "../model/postgres";
 
-export class Users {
+export class AmeriaPayments {
     static async saveToDB(args){
         await Ameriabank.create(args)
     };
@@ -8,5 +8,4 @@ export class Users {
     static async getFromDB(OrderID:string){
         return await Ameriabank.findOne({where:{OrderID}})
     };
-    
 }

@@ -41,14 +41,13 @@ router.get('/get', async (req:any, res)=>{
     try{
         let { resposneCode, paymentID } = req.query;
         paymentID = paymentID.toUpperCase()
-        console.log(req.query)
         if (resposneCode !== '00') {
-            return res.redirect('https://hecanivclub.am/Ameriabank/fail')
-            // return res.redirect('http://localhost:3000/Ameriabank/fail')
+            return res.redirect(`https://hecanivclub.am/Ameriabank/${paymentID}`)
+            return res.redirect(`http://localhost:3000/Ameriabank/${paymentID}`)
         }
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
-        res.redirect(`https://hecanivclub.am/Ameriabank/success/${paymentID}`)
-        // res.redirect(`http://localhost:3000/Ameriabank/success/${paymentID}`)
+        // res.redirect(`https://hecanivclub.am/Ameriabank/${paymentID}`)
+        res.redirect(`http://localhost:3000/Ameriabank/${paymentID}`)
     } catch(err){
         console.log(err)
         res.send({message:"error"})
