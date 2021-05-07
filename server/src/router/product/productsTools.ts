@@ -3,8 +3,8 @@ import { products } from '../../model/postgres';
 import Products from '../../sequelize/products';
 const router = express.Router();
         
-router.post('/sort',async (req, res):Promise<void>=>{
-    try{
+router.post('/sort', async (req, res):Promise<void> => {
+    try{ 
         const { language, attribute } = req.body
         const data = await products.findAll({
             where:{language},
@@ -20,7 +20,7 @@ router.post('/sort',async (req, res):Promise<void>=>{
 })
 
 
-router.post('/filter',async (req, res):Promise<void>=>{
+router.post('/filter', async (req, res):Promise<void> => {
     try{
         const { language, attributes } = req.body
         const data = await products.findAll({

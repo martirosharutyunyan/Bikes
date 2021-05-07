@@ -3,7 +3,7 @@ import express from 'express';
 import { promotions } from '../../model/postgres';
 const router = express.Router();
         
-router.post('/banner', async (req, res):Promise<void>=>{
+router.post('/banner', async (req, res):Promise<void> => {
     try{
         // @ts-ignore
         const { firstBanner, secondBanner } = req.files

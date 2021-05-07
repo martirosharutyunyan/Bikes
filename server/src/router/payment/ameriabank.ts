@@ -43,7 +43,7 @@ router.get('/get', async (req:any, res)=>{
         paymentID = paymentID.toUpperCase()
         if (resposneCode !== '00') {
             return res.redirect(`https://hecanivclub.am/Ameriabank/${paymentID}`)
-            return res.redirect(`http://localhost:3000/Ameriabank/${paymentID}`)
+            // return res.redirect(`http://localhost:3000/Ameriabank/${paymentID}`)
         }
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
         // res.redirect(`https://hecanivclub.am/Ameriabank/${paymentID}`)

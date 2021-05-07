@@ -2,7 +2,7 @@ import express from 'express';
 import { Infos } from '../../model/postgres';
 const router = express.Router();
         
-router.post('/changedata',async (req, res):Promise<void>=>{
+router.post('/changedata', async (req, res):Promise<void> => {
     try{
         const { info, language, name } = req.body
         if(language === 'hy'){

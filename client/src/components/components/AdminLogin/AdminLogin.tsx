@@ -21,16 +21,16 @@ let  AdminLogin:FC = () =>{
             [e.target.id]:e.target.value
         })
     }
-    const AutoLogin =async () =>{
-        if(AdminToken.getToken()){
+    const AutoLogin = async () => {
+        if (AdminToken.getToken()) {
             setload(true)
-            const res = await axios.post('/tokenverify',{token:AdminToken.getToken()})
+            const res = await axios.post('/tokenverify', {token:AdminToken.getToken()})
             if(res.data.message !== 'ok'){
                 console.log(res.data.message)
                 setload(false)
                 return 
             }
-            dispatch({type:'ADMINLOGIN',payload:'admin'})
+            dispatch({type:'ADMINLOGIN', payload:'admin'})
             history.push('/admin')
             setload(false)
         }
@@ -40,13 +40,13 @@ let  AdminLogin:FC = () =>{
     }, []);
     const AdminLogin = async () => {
         setload(true)
-        const res = await axios.post('/adminlogin',state)
+        const res = await axios.post('/adminlogin', state)
         if(res.data.message !== 'ok'){
             setload(false)
             return 
         }
         AdminToken.setToken(res.data.token)
-        dispatch({type:'ADMINLOGIN',payload:'admin'})
+        dispatch({type:'ADMINLOGIN', payload:'admin'})
         history.push('/admin')
     }
     if(load){

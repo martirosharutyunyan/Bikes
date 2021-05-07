@@ -32,6 +32,7 @@ const AdminPanel:FC = () => {
     const language = useSelector((state:Redux) => state.Reducer1.language);
     const [image, setimage] = useState<any[]>([]);
     const [changeProducts, setchangeProducts] = useState<productsWithImage[]>([]);
+    
     const changeValue = (e:input) =>{
         console.log(state)
         const target = e.target

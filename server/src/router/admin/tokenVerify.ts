@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import jwt from 'jsonwebtoken';
 
-router.post('/',async (req, res):Promise<void>=>{
+router.post('/', async (req, res):Promise<void> => {
     try{
         const { token } = req.body;
         const data:any = jwt.verify(token,process.env.TOKENKEY);

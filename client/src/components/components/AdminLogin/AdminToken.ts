@@ -1,11 +1,11 @@
 export class AdminToken{
-    static setToken(token:string){
-        localStorage.setItem('adminToken',token)
+    static setToken(token:string) {
+        localStorage.setItem('adminToken', token)
     }
-    static getToken(){
-        return  localStorage.getItem('adminToken')
+    static getToken() {
+        return localStorage.getItem('adminToken')
     }
-    static deleteToken(){
+    static deleteToken() {
         localStorage.removeItem('adminToken')
     }
 }
