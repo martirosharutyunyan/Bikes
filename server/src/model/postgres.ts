@@ -18,7 +18,7 @@ export const sequelize = new Sequelize({
     password:process.env.POSTGRESDBPASSWORD,
     database:process.env.POSTGRESDBNAME,
     dialect:'postgres',
-    logging:false
+    // logging:false
 })
 
 export const productColumns = {
@@ -42,6 +42,7 @@ export const productColumns = {
     month:STRING(),
     priceOfMonth:STRING(),
     hashtag:STRING(),
+    promotions:BOOLEAN()
 }
 
 export const Ameriabank = sequelize.define('ameriabank',{
@@ -80,7 +81,7 @@ export const Infos = sequelize.define('Infos',{
 
 export const products = sequelize.define('products', productColumns)
 export const trash = sequelize.define('trash', productColumns)
-export const promotions = sequelize.define('promotions',{
+export const promotions = sequelize.define('promotions', {
     name:STRING(),
     url:STRING()
 })

@@ -35,17 +35,19 @@ const AdminPanel:FC = () => {
     const changeValue = (e:input) =>{
         console.log(state)
         const target = e.target
-        setstate(prev=>{
+        setstate(prev => {
             return {
                 ...state,
                 [target.name]:target.type === 'checkbox' ? target.checked : target.value
             }
         })
     }
+
     const setFile = (e:input) => {
         // @ts-ignore
         setimage(e.target.files)
     }
+
     const getProducts = async ():Promise<any> => {
         const { data } = await axios.get(`/product/products`)
         console.log(data)
@@ -54,47 +56,37 @@ const AdminPanel:FC = () => {
         setproducts(data)
         setchangeProducts(data)
     }
+
     useEffect(():void => {
         getProducts()        
     }, [load, language]);
+
     const changeProduct = (e:input, elem:productsWithImage, isFile = false) => {
         let arr = [...changeProducts]
-        console.log(arr)
-        if(!isFile){
-            arr = arr.map((el:productsWithImage)=>{
-                if(el.id === elem.id){
-                    if(e.target.type === 'checkbox') {
-                        console.log(e.target.checked)
-                        // @ts-ignore
-                        el[e.target.name] = e.target.checked
-                        return el
-                    }
+        arr = arr.map((el:productsWithImage) => {
+            if (el.id === elem.id) {
+                if (!isFile) {
                     // @ts-ignore
-                    el[e.target.name] = e.target.value
+                    el[e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+                    return el
                 }
-                return el
-            })
-            setchangeProducts(arr)
-            return 
-        }
-        arr = arr.map((el:any)=>{
-            if(el.id === elem.id){
                 // @ts-ignore
                 el[e.target.name] = e.target.files
+                return el
             }
             return el
         })
         setchangeProducts(arr)
     }
+
     const submit = async ():Promise<any> => {
         setload(true)
         const data = new FormData()
         changeProducts.forEach(elem => {
-            if (!elem.image) {
-                return 
-            }
-            for (let i:number = 0; i < elem.image.length; i++) {
-                data.append(`${elem.id}`, elem.image[i])
+            if (elem.image) {
+                for (let i:number = 0; i < elem.image.length; i++) {
+                    data.append(`${elem.id}`, elem.image[i])
+                }
             }
         })
         data.append('data', JSON.stringify(changeProducts))
@@ -109,19 +101,21 @@ const AdminPanel:FC = () => {
         for (let i:number = 0; i < image.length; i++) {
             data.append(`product_image${i}`, image[i])
         }
-
         await axios.post('/product/add', data)
         setload(false)
     }
+
     const Deleteproducts = async (e:productsWithImage) => {
         setload(true)
         // @ts-ignore
         const data = await axios.post('/trash/addToTrash', {product:e})
         setload(false)
     }
+
     const changeLanguage = async (e:any):Promise<any> => {
         dispatch({type:'LANG', payload:e.target.name})
     }
+
     const search = async (e:input) => {
         const { value } = e.target
         if (!value) { 
@@ -129,9 +123,10 @@ const AdminPanel:FC = () => {
             setproducts(data)  
             return 
         }
-        const { data:{data} } = await axios.get(`/product/tools/search?info=${value}`)
+        const { data:{ data } } = await axios.get(`/product/tools/search?info=${value}`)
         setproducts(data)
     }
+
     if(load){
         return <Loader/>
     }

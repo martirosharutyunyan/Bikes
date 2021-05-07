@@ -16,8 +16,6 @@ router.get('/products', async (req, res):Promise<void>=>{
     }
 })
 
-
-
 router.post('/add',async (req, res):Promise<void>=>{
     try{
         // @ts-ignore
