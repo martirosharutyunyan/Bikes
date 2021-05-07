@@ -10,7 +10,8 @@ const INTEGER = () => ({ type: DataTypes.INTEGER })
 //     username:process.env.MYSQLUSERNAME,
 //     password:process.env.MYSQLPASSWORD,
 //     database:process.env.MYSQLDATABASE,
-//     dialect:'mysql'
+//     dialect:'mysql',
+//     logging:false
 // })
 
 export const sequelize = new Sequelize({
@@ -42,7 +43,7 @@ export const productColumns = {
     month:STRING(),
     priceOfMonth:STRING(),
     hashtag:STRING(),
-    promotions:BOOLEAN()
+    promotions:BOOLEAN(),
 }
 
 export const Ameriabank = sequelize.define('ameriabank',{
@@ -55,7 +56,7 @@ export const Ameriabank = sequelize.define('ameriabank',{
     Amount:STRING(),
     paymentID:STRING(),
     codeOfProduct:STRING(),
-    paymentStatus:BOOLEAN()
+    paymentStatus:BOOLEAN(),
 })
 
 export const Idram = sequelize.define('idram', {
@@ -68,7 +69,7 @@ export const Idram = sequelize.define('idram', {
     Amount:STRING(),
     codeOfProduct:STRING(),
     BILL_NO:INTEGER(),
-    paymentStatus:BOOLEAN()
+    paymentStatus:BOOLEAN(),
 })
 
 
@@ -83,7 +84,7 @@ export const products = sequelize.define('products', productColumns)
 export const trash = sequelize.define('trash', productColumns)
 export const promotions = sequelize.define('promotions', {
     name:STRING(),
-    url:STRING()
+    url:STRING(),
 })
 
 // Infos.sync({force:true})
