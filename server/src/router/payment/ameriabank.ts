@@ -32,7 +32,6 @@ router.post('/', async (req, res):Promise<void> => {
         await Ameriabank.create({description:JSON.stringify(Description), Amount, ...user, paymentID:PaymentID, codeOfProducts:JSON.stringify(codeOfProducts), paymentStatus:false})
         res.send({message:'ok', PaymentID})
     } catch(err:any) {
-        // console.log(err)
         res.send({message:'error'})
     }
 })
@@ -42,21 +41,19 @@ router.get('/get', async (req:any, res)=>{
         let { resposneCode, paymentID } = req.query;
         paymentID = paymentID.toUpperCase()
         if (resposneCode !== '00') {
-            return res.redirect(`https://hecanivclub.am/Ameriabank/${paymentID}`)
-            // return res.redirect(`http://localhost:3000/Ameriabank/${paymentID}`)
+            return res.redirect(`${process.env.FRONTURL}/Ameriabank/${paymentID}`)
         }
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
-        // res.redirect(`https://hecanivclub.am/Ameriabank/${paymentID}`)
-        res.redirect(`http://localhost:3000/Ameriabank/${paymentID}`)
+        return res.redirect(`${process.env.FRONTURL}/Ameriabank/${paymentID}`)
     } catch(err){
         console.log(err)
         res.send({message:"error"})
     }
 })
 
-router.get('/getStatus', async (req, res) => {
+router.post('/getStatus', async (req, res) => {
     try {
-        const { paymentID }:any = req.query
+        const { paymentID }:any = req.body
         const data = await Ameriabank.findOne({where:{paymentID:paymentID.toUpperCase()}})
         res.send(data)
     } catch(err) {

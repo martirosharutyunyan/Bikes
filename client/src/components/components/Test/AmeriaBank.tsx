@@ -8,16 +8,16 @@ const Test:FC = () => {
         name:'Մարտիրոս',
         surname:"Հարությունյան",
     });
-    const [billNo, setbillNo] = useState<number>(Math.floor(Math.random() * 10000000));
+    const [billNo, setbillNo] = useState<number>(Math.floor(Math.random() * 100000000));
     const [products, setproduct] = useState([{
         price:1,
         codeOfProduct:"հեծանիվ 1",
         description:'dasdsadsa',
         productName:'dsadsa',
     }]);
-    const [bank, setbank] = useState<boolean>(true);
+    const [bank, setbank] = useState<boolean>(false);
     const [idram, setIdram] = useState({
-        amount:'10',
+        amount:1,
         description:"das"
     });
     const changeValue = (e:input) => {
@@ -33,11 +33,13 @@ const Test:FC = () => {
             ...idram,
             [e.target.placeholder]:e.target.value
         })
+        
     }
     const buyIdram = async () => {
         const { data } = await axios.post('/payment/Idram/buy', {user:state, products, BILL_NO:billNo})
         console.log(data)
     }
+    
     return (
         <>
             <button onClick={() => setbank(prev => !prev)}>change</button>
@@ -56,7 +58,7 @@ const Test:FC = () => {
                             <input type="hidden" name="EDP_LANGUAGE" value="EN" />
                             <input type="hidden" name="EDP_REC_ACCOUNT" value={process.env.REACT_APP_EDP_REC_ACCOUNT} />
                             <input type="hidden" name="EDP_DESCRIPTION" value="Order description" />
-                            <input type="hidden" name="EDP_AMOUNT" value="10" />
+                            <input type="hidden" name="EDP_AMOUNT" value={idram.amount} />
                             <input type="hidden" name="EDP_BILL_NO" value={billNo} />
                             <input type="hidden" name='EDP_EMAIL' value='harutunyan.martiros@mail.ru'/>
                             <button onClick={buyIdram}>click</button>

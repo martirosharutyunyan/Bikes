@@ -1,25 +1,29 @@
 import { Sequelize, DataTypes } from 'sequelize';
 require('dotenv').config()
+const { 
+    DIALECT,
+    MYSQLUSERNAME,
+    MYSQLPASSWORD,
+    MYSQLDATABASE,
+    POSTGRESDBUSERNAME,
+    POSTGRESDBPASSWORD,
+    POSTGRESDBNAME,
+    HOST,
+    FORCE,
+} = process.env
 
 const STRING = () => ({ type: DataTypes.STRING })
 const BOOLEAN = () => ({ type: DataTypes.BOOLEAN })
 const INTEGER = () => ({ type: DataTypes.INTEGER })
 
-// export const sequelize = new Sequelize({
-//     host:process.env.MYSQLHOST,
-//     username:process.env.MYSQLUSERNAME,
-//     password:process.env.MYSQLPASSWORD,
-//     database:process.env.MYSQLDATABASE,
-//     dialect:'mysql',
-//     logging:false
-// })
-
+// @ts-ignore
 export const sequelize = new Sequelize({
-    username:process.env.POSTGRESDBUSERNAME,
-    password:process.env.POSTGRESDBPASSWORD,
-    database:process.env.POSTGRESDBNAME,
-    dialect:'postgres',
-    // logging:false
+    username:DIALECT === 'mysql' ? MYSQLUSERNAME : POSTGRESDBUSERNAME,
+    password:DIALECT === 'mysql' ? MYSQLPASSWORD : POSTGRESDBPASSWORD,
+    database:DIALECT === 'mysql' ? MYSQLDATABASE : POSTGRESDBNAME,
+    dialect:DIALECT,
+    host:HOST,
+    logging:false
 })
 
 export const productColumns = {
@@ -87,10 +91,9 @@ export const promotions = sequelize.define('promotions', {
     url:STRING(),
 })
 
-// Infos.sync({force:true})
-// Ameriabank.sync({force:true})
-// Idram.sync({force:true})
-// trash.sync({force:true})
-// products.sync({force:true})
-// promotions.sync({force:true})
-
+Infos.sync({force:!!FORCE})
+Ameriabank.sync({force:!!FORCE})
+Idram.sync({force:!!FORCE})
+trash.sync({force:!!FORCE})
+products.sync({force:!!FORCE})
+promotions.sync({force:!!FORCE})

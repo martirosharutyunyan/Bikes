@@ -8,6 +8,7 @@ const AdminLogin = lazy(() => import('../components/AdminLogin/AdminLogin'))
 const AmeriaBank = lazy(() => import('../components/Test/AmeriaBank'))
 const Banners = lazy(() => import('../components/AdminPanel/Banners'))
 const AmeriabankPage = lazy(() => import('../components/Test/AmeriabankPage'))
+const IdramPage = lazy(() => import('../components/Test/IdramPage'))
 {/* {window.location.href = 'https://facebook.com'}  */}
 
 const Routs:FC = () => {
@@ -16,9 +17,10 @@ const Routs:FC = () => {
         <Suspense fallback={<Loader/>}>
             <Switch>
                 {/* <Route exact path='/'><Banners/></Route> */}
-                {/* <Route exact path='/'><AmeriaBank/></Route> */}
-                <Route exact path='/'><AdminLogin/></Route>
+                <Route exact path='/'><AmeriaBank/></Route>
+                {/* <Route exact path='/'><AdminLogin/></Route> */}
                 <Route path='/Ameriabank/:data'><AmeriabankPage/></Route>
+                <Route path='/Idram/:data'><IdramPage/></Route>
                 { email ? <Route path='/admin'><AdminPanel/></Route> : null }
                 <Redirect to='/'/>
             </Switch>
