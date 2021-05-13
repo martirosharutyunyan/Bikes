@@ -49,12 +49,7 @@ router.post('/result', async (req, res) => {
 
 router.get('/fail', async (req, res) => {
     try {
-<<<<<<< HEAD
-        res.redirect('http://localhost:3000/Idram/fail')
-        // res.redirect(`https://hecanivclub.am/Idram/fail`)
-=======
         res.redirect(`${process.env.FRONTURL}/Idram/success/${req.query.EDP_BILL_NO}`)
->>>>>>> 05dce95e37b54d5fa0b0e9107febc76df6d1ee94
     } catch(err) {
         console.log(err)
         res.send({message:"error"})
