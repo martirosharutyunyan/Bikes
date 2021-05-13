@@ -51,7 +51,8 @@ router.get('/result', async (req, res) => {
 
 router.get('/fail', async (req, res) => {
     try {
-        res.redirect(`https://hecanivclub.am/Idram/fail`)
+        res.redirect('http://localhost:3000/Idram/fail')
+        // res.redirect(`https://hecanivclub.am/Idram/fail`)
     } catch(err) {
         console.log(err)
         res.send({message:"error"})
