@@ -7,5 +7,6 @@ router.use('/trash', require('./product/trash'))
 router.use('/adminlogin', require('./admin/adminLogin'))
 router.use('/tokenverify', require('./admin/tokenVerify'))
 router.use('/payment', require('./payment/payment'))
+router.use('/changePromotions', require('./product/promotions'))
 
 module.exports = router;

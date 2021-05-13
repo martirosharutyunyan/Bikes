@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.use('/tools', require('./productsTools'))
 
-router.get('/products', async (req, res):Promise<void>=>{
+router.get('/products', async (req, res):Promise<void> => {
     try{
-        const data = await Products.getProducts()  
+        const data = await Products.getProducts()
         res.send(data)
     } catch(err:any){
         console.log(err)
@@ -16,14 +16,11 @@ router.get('/products', async (req, res):Promise<void>=>{
     }
 })
 
-
-
-router.post('/add',async (req, res):Promise<void>=>{
+router.post('/add', async (req, res):Promise<void> => {
     try{
         // @ts-ignore
         let arr = []
         const { data:dataStr } = req.body
-        console.log(dataStr)
         const data:product = JSON.parse(dataStr)
         const { codeOfProduct } = data
         const areThere = await Products.findProduct(codeOfProduct)
@@ -49,7 +46,7 @@ router.post('/add',async (req, res):Promise<void>=>{
     }
 })
 
-router.post('/edit', async (req, res):Promise<void>=>{
+router.post('/edit', async (req, res):Promise<void> => {
     try{
         let arr = []
         const data = JSON.parse(req.body.data)
@@ -61,7 +58,7 @@ router.post('/edit', async (req, res):Promise<void>=>{
                 arr = [...arr, {id:key, img:files[key]}]
             }
         }
-        arr = arr.map(elem=>{
+        arr = arr.map(elem => {
             if(files){
                 if(!elem.img.length){
                     return {
@@ -78,7 +75,7 @@ router.post('/edit', async (req, res):Promise<void>=>{
             return elem
         })
         data.forEach(elem => {
-            const image = arr.find(image=> image.id === elem.id)
+            const image = arr.find(image => image.id === elem.id)
             if(image){
                 JSON.parse(elem.imagePath).forEach(elem => deleteImage(elem))
                 const { imagePath } = image

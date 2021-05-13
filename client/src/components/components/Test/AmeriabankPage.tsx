@@ -12,7 +12,7 @@ const SuccessPage:FC = () => {
     const data = useParams()
     const getStatus = async () => {
         // @ts-ignore
-        const elem = await axios.get(`/payment/Ameriabank/getStatus?paymentID=${data.data}`)
+        const elem = await axios.get('/payment/Ameriabank/getStatus', {paymentID:data.data})
         console.log(elem)
     }
     useEffect(():void => {

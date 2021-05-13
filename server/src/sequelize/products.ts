@@ -10,7 +10,7 @@ export default class Products {
         return await products.findAll();
     };
 
-        static async deleteProduct(codeOfProduct:string):Promise<void> {
+    static async deleteProduct(codeOfProduct:string):Promise<void> {
         await products.destroy({where: {codeOfProduct}});    
     };
 

@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 
-router.post('/',async (req, res)=>{
+router.post('/', async (req, res) => {
     try{
         const { LoginEmail, LoginPassword } = req.body
         const { ADMINLOGIN, ADMINPASSWORD } = process.env
