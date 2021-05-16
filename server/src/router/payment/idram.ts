@@ -60,17 +60,7 @@ router.post('/getStatus', async (req, res):Promise<any> => {
     try{
         const { BILL_NO } = req.body;
         const data = await Idram.findOne({where:{BILL_NO}});
-        console.log(data)
-        if (!data) {
-            return res.send({message:"error"});
-        }
-        let { codeOfProduct }:any = data;
-        codeOfProduct = JSON.parse(codeOfProduct)
-        codeOfProduct = codeOfProduct.map(async elem => {
-            const product = await Products.findProduct(codeOfProduct);
-            return product
-        })
-        res.send({message:"ok", codeOfProduct});
+        res.send({message:"ok", data});
     } catch(err:any){
         console.log(err);
         res.send({message: 'error'});
