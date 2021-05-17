@@ -1,8 +1,10 @@
-import { AmeriabankRequest } from '../../typescript/types';
+import { AmeriabankRequest, nodemailerMessageType } from '../../typescript/types';
 import axios from 'axios';
 import express from 'express';
 const router = express.Router();
 import { Ameriabank } from '../../model/postgres';
+import { mailer } from '../nodemailer/nodemailer';
+import { mailText, sendNotifications } from '../../tools/tools';
 const { AMERIAPASSWORD, AMERIACLIENTID, AMERIAAPI, AMERIAUSERNAME } = process.env
 
 router.post('/', async (req, res):Promise<void> => {
@@ -13,23 +15,18 @@ router.post('/', async (req, res):Promise<void> => {
         for (let i:number = 0; i < products.length; i++) {
             Amount += products[i].price
         }
-        let Description = []
-        const codeOfProducts = products.map(elem => {
-            Description = [...Description, elem.productName]
-            return elem.codeOfProduct
-        })
-        const requestData:AmeriabankRequest = {
+        const codeOfProducts = products.map(elem => elem.codeOfProduct)
+        const requestBody:AmeriabankRequest = {
             OrderID,
             Amount,
-            Description:JSON.stringify(Description),
+            Description:'Hecanivclub.am-ի վճարում',
             ClientID:AMERIACLIENTID,
             Username:AMERIAUSERNAME,
             Password:AMERIAPASSWORD,
-            BackURL:"http://46.4.249.19:8888/api/payment/Ameriabank/get",
-            // BackURL:"http://localhost:8888/api/payment/Ameriabank/get",
+            BackURL:`${process.env.FRONTURL}/api/payment/Ameriabank/get`,
         }
-        const { data:{PaymentID} } = await axios.post(AMERIAAPI, requestData)
-        await Ameriabank.create({description:JSON.stringify(Description), Amount, ...user, paymentID:PaymentID, codeOfProducts:JSON.stringify(codeOfProducts), paymentStatus:false})
+        const { data:{PaymentID} } = await axios.post(AMERIAAPI, requestBody)
+        await Ameriabank.create({Amount, ...user, paymentID:PaymentID, codeOfProducts:JSON.stringify(codeOfProducts), paymentStatus:false})
         res.send({message:'ok', PaymentID})
     } catch(err:any) {
         res.send({message:'error'})
@@ -43,6 +40,7 @@ router.get('/get', async (req:any, res)=>{
         if (resposneCode !== '00') {
             return res.redirect(`${process.env.FRONTURL}/Ameriabank/${paymentID}`)
         }
+        const data:any = await Ameriabank.findOne({where:{paymentID}})
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
         return res.redirect(`${process.env.FRONTURL}/Ameriabank/${paymentID}`)
     } catch(err){
@@ -54,7 +52,8 @@ router.get('/get', async (req:any, res)=>{
 router.post('/getStatus', async (req, res) => {
     try {
         const { paymentID }:any = req.body
-        const data = await Ameriabank.findOne({where:{paymentID:paymentID.toUpperCase()}})
+        const data = await Ameriabank.findOne({where:{paymentID}})
+        sendNotifications(data, 'AMERIABANK')
         res.send(data)
     } catch(err) {
         console.log(err)

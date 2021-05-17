@@ -1,5 +1,5 @@
-import { Sequelize, DataTypes } from 'sequelize';
-require('dotenv').config()
+import { Sequelize, DataTypes } from "sequelize";
+require("dotenv").config()
 const { 
     DIALECT,
     MYSQLUSERNAME,
@@ -18,9 +18,9 @@ const INTEGER = () => ({ type: DataTypes.INTEGER })
 
 // @ts-ignore
 export const sequelize = new Sequelize({
-    username:DIALECT === 'mysql' ? MYSQLUSERNAME : POSTGRESDBUSERNAME,
-    password:DIALECT === 'mysql' ? MYSQLPASSWORD : POSTGRESDBPASSWORD,
-    database:DIALECT === 'mysql' ? MYSQLDATABASE : POSTGRESDBNAME,
+    username:DIALECT === "mysql" ? MYSQLUSERNAME : POSTGRESDBUSERNAME,
+    password:DIALECT === "mysql" ? MYSQLPASSWORD : POSTGRESDBPASSWORD,
+    database:DIALECT === "mysql" ? MYSQLDATABASE : POSTGRESDBNAME,
     dialect:DIALECT,
     host:HOST,
     logging:false
@@ -50,26 +50,25 @@ export const productColumns = {
     promotions:BOOLEAN(),
 }
 
-export const Ameriabank = sequelize.define('ameriabank',{
+const userData = {
     name:STRING(),
     surname:STRING(),
     address:STRING(),
     phoneNumber:STRING(),
     email:STRING(),
-    description:STRING(),
+    deliveryTime:STRING(),
+}
+
+export const Ameriabank = sequelize.define("ameriabank", {
+    ...userData,
     Amount:STRING(),
     paymentID:STRING(),
     codeOfProduct:STRING(),
     paymentStatus:BOOLEAN(),
 })
 
-export const Idram = sequelize.define('idram', {
-    name:STRING(),
-    surname:STRING(),
-    address:STRING(),
-    phoneNumber:STRING(),
-    email:STRING(),
-    description:STRING(),
+export const Idram = sequelize.define("idram", {
+    ...userData,
     Amount:STRING(),
     codeOfProduct:STRING(),
     BILL_NO:INTEGER(),
@@ -77,16 +76,16 @@ export const Idram = sequelize.define('idram', {
 })
 
 
-export const Infos = sequelize.define('Infos',{
+export const Infos = sequelize.define("Infos", {
     name:STRING(),
     info_hy:STRING(),
     info_en:STRING(),
     info_ru:STRING(),
 })
 
-export const products = sequelize.define('products', productColumns)
-export const trash = sequelize.define('trash', productColumns)
-export const promotions = sequelize.define('promotions', {
+export const products = sequelize.define("products", productColumns)
+export const trash = sequelize.define("trash", productColumns)
+export const promotions = sequelize.define("promotions", {
     name:STRING(),
     url:STRING(),
 })
@@ -97,3 +96,4 @@ Idram.sync({force:!!FORCE})
 trash.sync({force:!!FORCE})
 products.sync({force:!!FORCE})
 promotions.sync({force:!!FORCE})
+

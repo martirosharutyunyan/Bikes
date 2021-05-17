@@ -45,3 +45,13 @@ export interface AmeriabankRequest {
     Amount:number
     BackURL?:string
 }
+
+export interface messageTextType {
+    name:string
+    surname:string
+    paymentMethod:string
+    address:string
+    deliveryTime:string
+    productType:string
+    model:string
+}

@@ -1,5 +1,9 @@
 import path from 'path';
 import fs from 'fs';
+import { messageTextType, nodemailerMessageType } from '../typescript/types';
+import { mailer } from '../router/nodemailer/nodemailer';
+import { Ameriabank } from '../model/postgres';
+import Products from '../sequelize/products';
 
 // declare global {
 //     // interface String{
@@ -79,3 +83,60 @@ export const deleteImage = (pathToImage:string) => {
     unlink(`${img_path}/${image}`).catch(err => console.log(err))
 }
 
+export const sendNotifications = (args, paymentMethod: 'IDRAM' | "AMERIABANK") => {
+    const messageForAdmin:nodemailerMessageType = {
+        from:process.env.EMAIL,
+        subject:'Պատվեր hecanivclub.am-ից',
+        to:'harutunyan.martiros@mail.ru',
+        text:''
+    }
+    const messageForUser:nodemailerMessageType = {
+        from:process.env.EMAIL,
+        subject:'Պատվեր hecanivclub.am-ից',
+        to:args.email,
+        text:''
+    }
+    const { codeOfProduct } = args
+    let products = []
+    JSON.parse(codeOfProduct).forEach(async elem => {
+        const data = await Products.findProduct(elem)
+        console.log(elem, data)
+        products = [...products, data]
+    });
+    console.log(products)
+}
+
+export const mailText = (args:messageTextType, admin:boolean = true):string => {
+    if (admin) {
+        return `
+Հարգելի hecanivclub.am, Դուք ունեք նոր պարվեր կայքից.
+Կից կներկայացեն պատվերի մանրամասները՝ անհարաժեշտ տեղեկատվությամբ.
+Պատվերի մանրամասները՝
+Անուն Ազգանուն՝ ${args.name} ${args.surname}
+Վճարման եղանակը՝ ${args.paymentMethod}
+Առաքման հասցեն՝ ${args.address}
+Նախընտրելի ժամանակը՝ ${args.deliveryTime}
+Պատվերի տեսակը՝ 
+Մոդելը՝ 
+        `
+    }
+    return `
+Պատվեր hecanivclub.am-ից
+Հարգելի պատվիրատու, Դուք կատարել եք նոր պատվեր hecanivclub.am- կայքից.
+Շնորհակալություն պատվերի համար։
+Ձեր պատվերը հաստատվել է, առաքումը կիրականանա նշված ժամանակահատվածում
+Կից կներկայացեն պատվերի մանրամասները՝ անհարաժեշտ տեղեկատվությամբ.
+Պատվերի մանրամասները՝
+Անուն Ազգանուն՝
+Վճարման եղանակը՝
+Առաքման հասցեն՝
+Նախընտրելի ժամանակը՝
+Պատվերի տեսակը՝
+Մոդելը՝
+    `
+} 
+
+
+
+
+console.log(mailText({address:'Գյուլբենկյան', deliveryTime:'15։00', name:'Մարտիրոս', paymentMethod:'Իդրամ', productType:'հեծանիվ', surname:'Հարությունյան', model:'համար 1'}))
