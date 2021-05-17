@@ -2,7 +2,7 @@ import { Idram } from './../../model/postgres';
 import express from 'express';
 import Products from '../../sequelize/products';
 const router = express.Router();
-        
+
 router.post('/buy', async (req, res) => {
     try {
         const { products, BILL_NO, user } = req.body
