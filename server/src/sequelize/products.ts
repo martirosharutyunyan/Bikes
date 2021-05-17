@@ -32,7 +32,7 @@ export default class Products {
     static async search(info:string):Promise<any> {
         return await products.findAll({
             where:{
-                hashteg:{
+                hashtag:{
                     [Op.like]:`%${info}%`,
                 },
             },
