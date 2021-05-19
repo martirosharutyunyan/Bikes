@@ -49,8 +49,7 @@ router.post('/add', async (req, res):Promise<void> => {
 router.post('/edit', async (req, res):Promise<void> => {
     try{
         let arr = []
-        const data = JSON.parse(req.body.data)
-        console.log(data)
+        const data = JSON.parse(req.body.data).sort((a, b) => a.id - b.id)
         // @ts-ignore
         const files = req.files
         if(files){
@@ -74,6 +73,7 @@ router.post('/edit', async (req, res):Promise<void> => {
             }
             return elem
         })
+        console.log(data)
         data.forEach(elem => {
             const image = arr.find(image => image.id === elem.id)
             if(image){
@@ -84,14 +84,14 @@ router.post('/edit', async (req, res):Promise<void> => {
                 delete obj.id
                 delete obj.createdAt
                 delete obj.updatedAt
-                Products.updateProduct(obj, elem.codeOfProduct)
+                Products.updateProduct(obj, elem.id)
                 return 
             }
             const obj = {...elem,  price:+elem.price}
             delete obj.id
             delete obj.createdAt
             delete obj.updatedAt
-            Products.updateProduct(obj, elem.codeOfProduct)
+            Products.updateProduct(obj, elem.id)
         })
         res.send({message:"ok"})
     } catch(err:any){

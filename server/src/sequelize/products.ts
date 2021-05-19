@@ -18,8 +18,8 @@ export default class Products {
         return await products.findOne({where:{codeOfProduct}});
     };
     
-    static async updateProduct(args, codeOfProduct:number):Promise<any> {
-        await products.update(args, {where:{codeOfProduct}});
+    static async updateProduct(args, id:number):Promise<any> {
+        await products.update(args, {where:{id}});
     };
 
     static async updateStars({codeOfProduct, count}):Promise<any> {

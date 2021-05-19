@@ -7,6 +7,7 @@ import cors from 'cors'
 import path from 'path';
 import fileupload from 'express-fileupload';
 import { Ameriabank, sequelize } from './model/postgres';
+import Products from './sequelize/products';
 const app = express();
 const port:string | number = process.env.PORT ?? 8888;
 

@@ -1,6 +1,7 @@
 import { Idram } from './../../model/postgres';
 import express from 'express';
 import Products from '../../sequelize/products';
+import { sendNotifications } from '../../tools/tools';
 const router = express.Router();
 
 router.post('/buy', async (req, res) => {
@@ -60,6 +61,7 @@ router.post('/getStatus', async (req, res):Promise<any> => {
     try{
         const { BILL_NO } = req.body;
         const data = await Idram.findOne({where:{BILL_NO}});
+        sendNotifications(data, 'Իդրամ')
         res.send({message:"ok", data});
     } catch(err:any){
         console.log(err);

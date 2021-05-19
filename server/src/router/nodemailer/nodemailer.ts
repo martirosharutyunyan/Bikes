@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import { nodemailerMessageType } from '../../typescript/types';
+require('dotenv').config();
 
 const transporter = nodemailer.createTransport(
     {

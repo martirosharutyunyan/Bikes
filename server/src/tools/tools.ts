@@ -1,3 +1,4 @@
+import { product } from './../typescript/types';
 import path from 'path';
 import fs from 'fs';
 import { messageTextType, nodemailerMessageType } from '../typescript/types';
@@ -83,60 +84,89 @@ export const deleteImage = (pathToImage:string) => {
     unlink(`${img_path}/${image}`).catch(err => console.log(err))
 }
 
-export const sendNotifications = (args, paymentMethod: 'IDRAM' | "AMERIABANK") => {
+export const sendNotifications = async (args, paymentMethod: 'Իդրամ' | "Ամերիաբանկ") => {
+    const { codeOfProduct } = args
+    let products:product[] = await Promise.all(JSON.parse(codeOfProduct).map(async elem => {
+        const data = await Products.findProduct(elem)
+        return data
+    }))
     const messageForAdmin:nodemailerMessageType = {
         from:process.env.EMAIL,
         subject:'Պատվեր hecanivclub.am-ից',
         to:'harutunyan.martiros@mail.ru',
-        text:''
+        html:mailText(args, products, paymentMethod)
     }
     const messageForUser:nodemailerMessageType = {
         from:process.env.EMAIL,
         subject:'Պատվեր hecanivclub.am-ից',
         to:args.email,
-        text:''
+        html:mailText(args, products, paymentMethod, false)
     }
-    const { codeOfProduct } = args
-    let products = []
-    JSON.parse(codeOfProduct).forEach(async elem => {
-        const data = await Products.findProduct(elem)
-        console.log(elem, data)
-        products = [...products, data]
-    });
-    console.log(products)
+    mailer(messageForAdmin)
+    mailer(messageForUser)
 }
 
-export const mailText = (args:messageTextType, admin:boolean = true):string => {
+export const mailText = (args:messageTextType, products:product[], paymentMethod:string, admin:boolean = true):string => {
+    const productType = [...new Set(products.map(elem => elem.productType))]
+    let str = ``
+    productType.forEach(elem => {
+        const array = products.filter(product => product.productType === elem)
+        let model = `${array.length === 1 ? 'Մոդելը՝ ' : 'Մոդելները՝'}`
+        array.forEach(elem => {
+            model += ` ${elem.productNameHY}, `
+        })
+        str += `Պատվերի տեսակը՝ ${elem}
+${model}
+`
+    })
     if (admin) {
-        return `
-Հարգելի hecanivclub.am, Դուք ունեք նոր պարվեր կայքից.
-Կից կներկայացեն պատվերի մանրամասները՝ անհարաժեշտ տեղեկատվությամբ.
-Պատվերի մանրամասները՝
-Անուն Ազգանուն՝ ${args.name} ${args.surname}
-Վճարման եղանակը՝ ${args.paymentMethod}
-Առաքման հասցեն՝ ${args.address}
-Նախընտրելի ժամանակը՝ ${args.deliveryTime}
-Պատվերի տեսակը՝ 
-Մոդելը՝ 
-        `
+        // @ts-ignore
+        return `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+        <b>Հարգելի hecanivclub.am, Դուք ունեք նոր պարվեր կայքից.</b><br>
+        Շնորհակալություն պատվերի համար։<br>
+        Ձեր պատվերը հաստատվել է, առաքումը կիրականանա նշված ժամանակահատվածում<br>
+        Կից կներկայացեն պատվերի մանրամասները՝ անհարաժեշտ տեղեկատվությամբ.<br>
+        <br>
+        Պատվերի մանրամասները՝<br>
+        Անուն Ազգանուն՝ ${args.name} ${args.surname}<br>
+        Վճարման եղանակը՝ ${paymentMethod}<br>
+        Առաքման հասցեն՝ ${args.address}<br>
+        Նախընտրելի ժամանակը՝ ${args.deliveryTime}<br>
+        
+        ${str}
+        </body>
+        </html>`
     }
-    return `
-Պատվեր hecanivclub.am-ից
-Հարգելի պատվիրատու, Դուք կատարել եք նոր պատվեր hecanivclub.am- կայքից.
-Շնորհակալություն պատվերի համար։
-Ձեր պատվերը հաստատվել է, առաքումը կիրականանա նշված ժամանակահատվածում
-Կից կներկայացեն պատվերի մանրամասները՝ անհարաժեշտ տեղեկատվությամբ.
-Պատվերի մանրամասները՝
-Անուն Ազգանուն՝
-Վճարման եղանակը՝
-Առաքման հասցեն՝
-Նախընտրելի ժամանակը՝
-Պատվերի տեսակը՝
-Մոդելը՝
-    `
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+    <b>Հարգելի պատվիրատու, Դուք կատարել եք նոր պատվեր hecanivclub.am- կայքից.</b><br>
+    Շնորհակալություն պատվերի համար։<br>
+    Ձեր պատվերը հաստատվել է, առաքումը կիրականանա նշված ժամանակահատվածում<br>
+    Կից կներկայացեն պատվերի մանրամասները՝ անհարաժեշտ տեղեկատվությամբ.<br>
+    
+    Պատվերի մանրամասները՝<br>
+    Անուն Ազգանուն՝ ${args.name} ${args.surname}<br>
+    Վճարման եղանակը՝ ${paymentMethod}<br>
+    Առաքման հասցեն՝ ${args.address}<br>
+    Նախընտրելի ժամանակը՝ ${args.deliveryTime}<br>
+    
+    ${str}
+    </body>
+    </html>`
 } 
 
-
-
-
-console.log(mailText({address:'Գյուլբենկյան', deliveryTime:'15։00', name:'Մարտիրոս', paymentMethod:'Իդրամ', productType:'հեծանիվ', surname:'Հարությունյան', model:'համար 1'}))

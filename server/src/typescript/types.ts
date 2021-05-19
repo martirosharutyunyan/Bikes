@@ -3,7 +3,7 @@ export interface nodemailerMessageType {
     from: string
     to: string
     subject: string
-    text:string
+    html:string
 }
 
 export interface product  {

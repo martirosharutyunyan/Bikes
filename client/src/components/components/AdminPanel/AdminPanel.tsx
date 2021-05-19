@@ -165,7 +165,7 @@ const AdminPanel:FC = () => {
                 <div style={{marginTop:'3vw'}} className='products'>
                     {products.map((elem:productsWithImage, i)=> {
                         return (
-                            <div key={i} style={{marginTop:'2vw',border:'1px solid black'}}>
+                            <div key={elem.id} style={{marginTop:'2vw',border:'1px solid black'}}>
                                 {/* @ts-ignore */}
                                 {JSON.parse(elem.imagePath).map((elem, i) => <img key={i} src={elem}/>)}
                                 <input value={elem.productNameHY} defaultValue={elem.productNameHY} onChange={(e:input) => changeProduct(e, elem)} name='productNameHY' placeholder='անունը' type="text"/>
