@@ -75,7 +75,7 @@ export const generateFile = (imageName: string, data:any):string => {
     const random = Math.random() 
     const img_path = path.join(__dirname, '../../public')
     writeFile(`${img_path}/random${random}.${extension}`, data).catch(err => console.log(err))    
-    return `${process.env.IMAGEURL}random${random}.${extension}`;
+    return `random${random}.${extension}`;
 }
 
 export const deleteImage = (pathToImage:string) => {
