@@ -80,8 +80,7 @@ export const generateFile = (imageName: string, data:any):string => {
 
 export const deleteImage = (pathToImage:string) => {
     const img_path = path.join(__dirname, '../../public')
-    const image = pathToImage.slice(process.env.IMAGEURL.length)
-    unlink(`${img_path}/${image}`).catch(err => console.log(err))
+    unlink(`${img_path}/${pathToImage}`).catch(err => console.log(err))
 }
 
 export const sendNotifications = async (args, paymentMethod: 'Իդրամ' | "Ամերիաբանկ") => {

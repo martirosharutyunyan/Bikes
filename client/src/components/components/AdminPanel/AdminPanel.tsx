@@ -97,7 +97,7 @@ const AdminPanel:FC = () => {
 
     const AddProduct = async () =>{
         setload(true)
-        const data = new FormData()
+        const data = new Fo\rmData()
         data.append('data', JSON.stringify(state))
         for (let i:number = 0; i < image.length; i++) {
             data.append(`product_image${i}`, image[i])
