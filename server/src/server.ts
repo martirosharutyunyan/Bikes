@@ -23,7 +23,7 @@ app.use(express.urlencoded({
     extended: false
 }))
 app.use('/api', require('./router/controller'))
-app.use(express.static(path.join(__dirname, '../public')))
+app.use('/public',express.static(path.join(__dirname, '../public')))
 
 // require('bcrypt').hash('hhs13516', 10).then(res => console.log(res));
 app.get('/', (req, res) => {

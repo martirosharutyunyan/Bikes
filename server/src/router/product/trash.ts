@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/addToTrash', async (req, res):Promise<void> => {
     try{
-        const { product } = req.body
+	const { product } = req.body
         const { codeOfProduct } = product
         await Products.deleteProduct(codeOfProduct)
         await Trash.AddProduct(product)
