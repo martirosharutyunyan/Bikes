@@ -47,7 +47,7 @@ export const productColumns = {
     month:STRING(),
     priceOfMonth:STRING(),
     hashtag:STRING(),
-    promotions:BOOLEAN(),
+    promotions:STRING(),
 }
 
 const userData = {

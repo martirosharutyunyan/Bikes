@@ -8,6 +8,7 @@ import path from 'path';
 import fileupload from 'express-fileupload';
 import { Ameriabank, sequelize } from './model/postgres';
 import Products from './sequelize/products';
+import { recover } from './model/recoverProduct';
 const app = express();
 const port:string | number = process.env.PORT ?? 8888;
 
@@ -30,5 +31,6 @@ app.get('/', (req, res) => {
     // Ameriabank.create({name:'name',surname:"surname",address:'address',phoneNumber:'phoneNumber',email:'email',deliveryTime:'deliveryTime',Amount:'10000', paymentID:'123321',codeOfProduct:JSON.stringify(['codeOfProduct','codeOfProduct2']),paymentStatus:true})
     res.send('ok')
 })
+recover()
 
 app.listen(port, () => console.log(`server is running on port http://localhost:${port}`));
