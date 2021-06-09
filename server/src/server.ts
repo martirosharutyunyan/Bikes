@@ -27,7 +27,8 @@ app.use('/api', require('./router/controller'))
 app.use('/public',express.static(path.join(__dirname, '../public')))
 
 // require('bcrypt').hash('hhs13516', 10).then(res => console.log(res));
-app.get('/', (req, res) => {    
+app.get('/', (req, res) => {
+    recover()    
     // Ameriabank.create({name:'name',surname:"surname",address:'address',phoneNumber:'phoneNumber',email:'email',deliveryTime:'deliveryTime',Amount:'10000', paymentID:'123321',codeOfProduct:JSON.stringify(['codeOfProduct','codeOfProduct2']),paymentStatus:true})
     res.send('ok')
 })
