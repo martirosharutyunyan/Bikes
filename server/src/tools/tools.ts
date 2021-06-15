@@ -92,7 +92,7 @@ export const sendNotifications = async (args, paymentMethod: 'Իդրամ' | "Ա�
     const messageForAdmin:nodemailerMessageType = {
         from:process.env.EMAIL,
         subject:'Պատվեր hecanivclub.am-ից',
-        to:'harutunyan.martiros@mail.ru',
+        to:process.env.ADMINEMAIL,
         html:mailText(args, products, paymentMethod)
     }
     const messageForUser:nodemailerMessageType = {

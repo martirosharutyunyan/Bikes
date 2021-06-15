@@ -2,20 +2,13 @@ import nodemailer from 'nodemailer';
 import { nodemailerMessageType } from '../../typescript/types';
 require('dotenv').config();
 
-const transporter = nodemailer.createTransport(
-    {
-        host: "smtp.mail.ru",
-        port: 465,
-        secure: true, // if 465 true else false
-        auth: {
-            user: process.env.EMAIL,
-            pass: process.env.EMAIL_PASSWORD,
-        },
-    },
-    {
-        from: "Martiros",
-    },
-);
+const transporter = nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+        user:process.env.EMAIL,
+        pass:process.env.EMAIL_PASSWORD
+    }
+})
 
 export const mailer = (message:nodemailerMessageType):void => {
     transporter.sendMail(message, (err:Error):void => {
@@ -24,4 +17,5 @@ export const mailer = (message:nodemailerMessageType):void => {
         }
     });
 };
+
 

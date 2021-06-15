@@ -90,6 +90,7 @@ export const promotions = sequelize.define("promotions", {
     url:STRING(),
 })
 
+
 Infos.sync({force:!!FORCE})
 Ameriabank.sync({force:!!FORCE})
 Idram.sync({force:!!FORCE})

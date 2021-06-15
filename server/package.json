@@ -39,6 +39,7 @@
     "@types/morgan": "^1.9.2",
     "@types/nodemailer": "^6.4.1",
     "@types/pg": "^7.14.6",
+    "@types/sequelize": "^4.28.9",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
     "eslint": "^7.14.0",
