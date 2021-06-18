@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
 require("dotenv").config()
+
 const { 
     DIALECT,
     MYSQLUSERNAME,

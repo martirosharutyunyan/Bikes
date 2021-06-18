@@ -3,7 +3,6 @@ import path from 'path';
 import fs from 'fs';
 import { messageTextType, nodemailerMessageType } from '../typescript/types';
 import { mailer } from '../router/nodemailer/nodemailer';
-import { Ameriabank } from '../model/postgres';
 import Products from '../sequelize/products';
 require('dotenv').config();
 
