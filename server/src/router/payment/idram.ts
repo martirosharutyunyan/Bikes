@@ -16,7 +16,8 @@ router.post('/buy', async (req, res) => {
             Description = [...Description, elem.productName]
             return elem.codeOfProduct
         })
-        Idram.create({ description:JSON.stringify(Description), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user }) 
+        Idram.create({ description:JSON.stringify(Description), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user })
+        console.log({ description:JSON.stringify(Description), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user }) 
         res.send({message:'ok'})
     } catch(err) {
         console.log(err)
@@ -26,6 +27,7 @@ router.post('/buy', async (req, res) => {
 
 router.get('/success', async (req, res) => {
     try {
+        console.log(req.query.EDP_BILL_NO)
         await Idram.update({paymentStatus:true}, {where:{BILL_NO:req.query.EDP_BILL_NO}})
         res.redirect('https://hecanivclub.am/basket?paymentStatus=successed')
     } catch(err) {
@@ -37,6 +39,7 @@ router.get('/success', async (req, res) => {
 router.post('/result', async (req, res) => {
     try {
         const data = await Idram.findOne({where: {BILL_NO:req.body.EDP_BILL_NO}})
+        console.log(data)
         if (!data) {
             res.send({message:'error'})
             return 
@@ -50,6 +53,7 @@ router.post('/result', async (req, res) => {
 
 router.get('/fail', async (req, res) => {
     try {
+        console.log(req.query.EDP_BILL_NO)
         res.redirect('https://hecanivclub.am/basket?paymentStatus=failed')
     } catch(err) {
         console.log(err)
