@@ -11,11 +11,14 @@ const transporter = nodemailer.createTransport({
 })
 
 export const mailer = (message:nodemailerMessageType):void => {
-    transporter.sendMail(message, (err:Error):void => {
-        if (err) {
-            console.log(err)
-        }
-    });
+    transporter.sendMail(message, console.log);
 };
 
 
+// mailer({
+//     from:"hecanivclub.am",
+//     html:"ստեղ ապրանք չկա ուղղակի թեստի համարա",
+//     subject:"դլահսլդասն",
+//     // to:'tahku_ohjluhe@mail.ru'
+//     to:"Vazgen107@gmail.com"
+// })

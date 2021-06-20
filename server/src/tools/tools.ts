@@ -84,7 +84,7 @@ export const deleteImage = (pathToImage:string) => {
     unlink(`${img_path}/${pathToImage}`).catch(err => console.log(err))
 }
 
-export const sendNotifications = async (args, paymentMethod: 'Իդրամ' | "Ամերիաբանկ") => {
+export const sendNotifications = async (args, paymentMethod: 'IDRAM' | "AMERIABANK" | 'CASH') => {
     const { codeOfProduct } = args
     let products:product[] = await Promise.all(JSON.parse(codeOfProduct).map(async elem => {
         const data = await Products.findProduct(elem)

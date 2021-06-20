@@ -53,7 +53,7 @@ router.post('/getStatus', async (req, res) => {
     try {
         const { paymentID }:any = req.body
         const data = await Ameriabank.findOne({where:{paymentID}})
-        sendNotifications(data, 'Ամերիաբանկ')
+        sendNotifications(data, 'AMERIABANK')
         res.send(data)
     } catch(err) {
         console.log(err)

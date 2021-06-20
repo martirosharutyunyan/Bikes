@@ -61,7 +61,7 @@ router.post('/getStatus', async (req, res):Promise<any> => {
     try{
         const { BILL_NO } = req.body;
         const data = await Idram.findOne({where:{BILL_NO}});
-        sendNotifications(data, 'Իդրամ')
+        sendNotifications(data, 'IDRAM')
         res.send({message:"ok", data});
     } catch(err:any){
         console.log(err);
