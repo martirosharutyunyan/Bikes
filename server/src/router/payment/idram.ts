@@ -27,7 +27,7 @@ router.post('/buy', async (req, res) => {
 router.get('/success', async (req, res) => {
     try {
         await Idram.update({paymentStatus:true}, {where:{BILL_NO:req.query.EDP_BILL_NO}})
-        res.redirect(`${process.env.FRONTURL}/Idram/success/${req.query.EDP_BILL_NO}`)
+        res.redirect('https://hecanivclub.am/basket?paymentStatus=successed')
     } catch(err) {
         console.log(err)
         res.send({message:"error"})
@@ -50,7 +50,7 @@ router.post('/result', async (req, res) => {
 
 router.get('/fail', async (req, res) => {
     try {
-        res.redirect(`${process.env.FRONTURL}/Idram/success/${req.query.EDP_BILL_NO}`)
+        res.redirect('https://hecanivclub.am/basket?paymentStatus=failed')
     } catch(err) {
         console.log(err)
         res.send({message:"error"})

@@ -38,11 +38,10 @@ router.get('/get', async (req:any, res)=>{
         let { resposneCode, paymentID } = req.query;
         paymentID = paymentID.toUpperCase()
         if (resposneCode !== '00') {
-            return res.redirect(`${process.env.FRONTURL}/Ameriabank/${paymentID}`)
+            return res.redirect('https://hecanivclub.am/basket?paymentStatus=failed')
         }
-        const data:any = await Ameriabank.findOne({where:{paymentID}})
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
-        return res.redirect(`${process.env.FRONTURL}/Ameriabank/${paymentID}`)
+        res.redirect('https://hecanivclub.am/basket?paymentStatus=successed')
     } catch(err){
         console.log(err)
         res.send({message:"error"})
