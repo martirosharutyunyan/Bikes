@@ -64,14 +64,14 @@ export const Ameriabank = sequelize.define("ameriabank", {
     ...userData,
     Amount:STRING(),
     paymentID:STRING(),
-    codeOfProduct:STRING(),
+    products:STRING(),
     paymentStatus:BOOLEAN(),
 })
 
 export const Idram = sequelize.define("idram", {
     ...userData,
     Amount:STRING(),
-    codeOfProduct:STRING(),
+    products:STRING(),
     BILL_NO:INTEGER(),
     paymentStatus:BOOLEAN(),
 })

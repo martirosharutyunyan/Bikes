@@ -26,7 +26,7 @@ router.post('/', async (req, res):Promise<void> => {
             BackURL:`${process.env.FRONTURL}/api/payment/Ameriabank/get`,
         }
         const { data:{PaymentID} } = await axios.post(AMERIAAPI, requestBody)
-        await Ameriabank.create({Amount, ...user, paymentID:PaymentID, codeOfProducts:JSON.stringify(codeOfProducts), paymentStatus:false})
+        await Ameriabank.create({Amount, ...user, paymentID:PaymentID, products:JSON.stringify(products), paymentStatus:false})
         res.send({message:'ok', PaymentID})
     } catch(err:any) {
         res.send({message:'error'})
