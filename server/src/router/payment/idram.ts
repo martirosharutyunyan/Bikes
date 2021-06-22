@@ -1,6 +1,5 @@
 import { Idram } from './../../model/postgres';
 import express from 'express';
-import Products from '../../sequelize/products';
 import { sendNotifications } from '../../tools/tools';
 const router = express.Router();
 
@@ -11,13 +10,8 @@ router.post('/buy', async (req, res) => {
         for (let i:number = 0; i < products.length; i++) {
             Amount += products[i].price
         }
-        let Description = []
-        const codeOfProducts = products.map(elem => {
-            Description = [...Description, elem.productName]
-            return elem.codeOfProduct
-        })
-        Idram.create({ description:JSON.stringify(Description), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user })
-        console.log({ description:JSON.stringify(Description), Amount, codeOfProduct:JSON.stringify(codeOfProducts), BILL_NO, paymentStatus:false, ...user }) 
+        const Description = products.map(elem => elem.productNameHY)
+        Idram.create({ description:JSON.stringify(Description), Amount, products: JSON.stringify(products), BILL_NO, paymentStatus:false, ...user })
         res.send({message:'ok'})
     } catch(err) {
         console.log(err)
@@ -27,8 +21,10 @@ router.post('/buy', async (req, res) => {
 
 router.get('/success', async (req, res) => {
     try {
-        console.log(req.query.EDP_BILL_NO)
-        await Idram.update({paymentStatus:true}, {where:{BILL_NO:req.query.EDP_BILL_NO}})
+        const { EDP_BILL_NO:BILL_NO } = req.query 
+        await Idram.update( { paymentStatus: true }, { where: { BILL_NO } })
+        const data = await Idram.findOne({where:{BILL_NO}});
+        sendNotifications(data, 'IDRAM')
         res.redirect('https://hecanivclub.am/basket?paymentStatus=successed')
     } catch(err) {
         console.log(err)
@@ -53,24 +49,11 @@ router.post('/result', async (req, res) => {
 
 router.get('/fail', async (req, res) => {
     try {
-        console.log(req.query.EDP_BILL_NO)
         res.redirect('https://hecanivclub.am/basket?paymentStatus=failed')
     } catch(err) {
         console.log(err)
         res.send({message:"error"})
     }
 })
-
-router.post('/getStatus', async (req, res):Promise<any> => {
-    try{
-        const { BILL_NO } = req.body;
-        const data = await Idram.findOne({where:{BILL_NO}});
-        sendNotifications(data, 'IDRAM')
-        res.send({message:"ok", data});
-    } catch(err:any){
-        console.log(err);
-        res.send({message: 'error'});
-    }
-});
 
 module.exports = router;

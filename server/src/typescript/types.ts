@@ -12,7 +12,7 @@ export interface product  {
     productNameEN:string
     productNameRU:string
     productType:string
-    price:string
+    price:number
     colors:string
     sizes:string
     height:string
@@ -54,4 +54,5 @@ export interface messageTextType {
     deliveryTime:string
     productType:string
     model:string
+    phoneNumber:string
 }

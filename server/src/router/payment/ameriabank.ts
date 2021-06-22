@@ -41,6 +41,8 @@ router.get('/get', async (req:any, res)=>{
             return res.redirect('https://hecanivclub.am/basket?paymentStatus=failed')
         }
         await Ameriabank.update({paymentStatus:true}, {where:{paymentID:paymentID}})
+        const data = await Ameriabank.findOne({where:{paymentID}})
+        sendNotifications(data, 'VISA')
         res.redirect('https://hecanivclub.am/basket?paymentStatus=successed')
     } catch(err){
         console.log(err)
@@ -48,16 +50,5 @@ router.get('/get', async (req:any, res)=>{
     }
 })
 
-router.post('/getStatus', async (req, res) => {
-    try {
-        const { paymentID }:any = req.body
-        const data = await Ameriabank.findOne({where:{paymentID}})
-        sendNotifications(data, 'AMERIABANK')
-        res.send(data)
-    } catch(err) {
-        console.log(err)
-        res.send({message:'error'})
-    }
-})
 
 module.exports = router;

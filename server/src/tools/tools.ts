@@ -84,12 +84,9 @@ export const deleteImage = (pathToImage:string) => {
     unlink(`${img_path}/${pathToImage}`).catch(err => console.log(err))
 }
 
-export const sendNotifications = async (args, paymentMethod: 'IDRAM' | "AMERIABANK" | 'CASH') => {
-    const { codeOfProduct } = args
-    let products:product[] = await Promise.all(JSON.parse(codeOfProduct).map(async elem => {
-        const data = await Products.findProduct(elem)
-        return data
-    }))
+export const sendNotifications = async (args, paymentMethod: 'IDRAM' | "VISA" | 'CASH') => {
+    const { products:strProducts } = args
+    const products = JSON.parse(strProducts)
     const messageForAdmin:nodemailerMessageType = {
         from:process.env.EMAIL,
         subject:'Պատվեր hecanivclub.am-ից',
@@ -105,15 +102,30 @@ export const sendNotifications = async (args, paymentMethod: 'IDRAM' | "AMERIABA
     mailer(messageForAdmin)
     mailer(messageForUser)
 }
+let str = '';
+['#00FF00', '#4d19a7'].forEach(e => str += `<div style="width:500;height:500;background-color:${e}"><div/><br>`)
+
+const colors = {
+    "#E3E3CD": 'Մարմնագույն',
+    "#E8A631": 'Գազարագույն',
+    "#878D92": 'Բաց Մոխրագույն',
+    "#49494D": 'Մուգ Մոխրագույն',
+    "#B42F32": 'Կարմիր',
+    "#000000": 'Սև',
+    "#00FF00": 'Կանաչ',
+    "#4d19a7": 'Մանուշակագույն'
+}
 
 export const mailText = (args:messageTextType, products:product[], paymentMethod:string, admin:boolean = true):string => {
     const productType = [...new Set(products.map(elem => elem.productType))]
+    let value = 0;
+    products.forEach(e => value+= e.price)
     let str = ``
     productType.forEach(elem => {
         const array = products.filter(product => product.productType === elem)
-        let model = `${array.length === 1 ? 'Մոդելը՝ ' : 'Մոդելները՝'}`
+        let model = array.length === 1 ? 'Մոդելը՝ ' : 'Մոդելները՝ '
         array.forEach(elem => {
-            model += ` ${elem.productNameHY}, `
+            model += `Անունը՝ ${elem.productNameHY}, Գույնը՝ ${colors[elem.colors]}`
         })
         str += `Պատվերի տեսակը՝ ${elem}
 ${model}
@@ -137,10 +149,12 @@ ${model}
         <br>
         Պատվերի մանրամասները՝<br>
         Անուն Ազգանուն՝ ${args.name} ${args.surname}<br>
+        Պատվիրատուի հեռախոսահամարը ${args.phoneNumber}
         Վճարման եղանակը՝ ${paymentMethod}<br>
+        Պատվերի արժեքը՝ ${value} դրամ<br>
         Առաքման հասցեն՝ ${args.address}<br>
         Նախընտրելի ժամանակը՝ ${args.deliveryTime}<br>
-        
+
         ${str}
         </body>
         </html>`
@@ -161,10 +175,12 @@ ${model}
     
     Պատվերի մանրամասները՝<br>
     Անուն Ազգանուն՝ ${args.name} ${args.surname}<br>
+    Պատվիրատուի հեռախոսահամարը ${args.phoneNumber}
     Վճարման եղանակը՝ ${paymentMethod}<br>
+    Պատվերի արժեքը՝ ${value} դրամ<br>
     Առաքման հասցեն՝ ${args.address}<br>
     Նախընտրելի ժամանակը՝ ${args.deliveryTime}<br>
-    
+
     ${str}
     </body>
     </html>`
