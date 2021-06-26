@@ -3,12 +3,12 @@ import axios from 'axios';
 import express from 'express';
 const router = express.Router();
 import { Ameriabank } from '../../model/postgres';
-import { mailer } from '../nodemailer/nodemailer';
-import { mailText, sendNotifications } from '../../tools/tools';
+import { sendNotifications } from '../../tools/tools';
 const { AMERIAPASSWORD, AMERIACLIENTID, AMERIAAPI, AMERIAUSERNAME } = process.env
 
 router.post('/', async (req, res):Promise<void> => {
-    try{        
+    try{ 
+        console.log(req.body)       
         const { user, products } = req.body
         const OrderID = 2380801 + Math.floor(Math.random() * 5000000)
         let Amount = 0
@@ -35,6 +35,7 @@ router.post('/', async (req, res):Promise<void> => {
 
 router.get('/get', async (req:any, res)=>{
     try{
+        console.log(req.query)
         let { resposneCode, paymentID } = req.query;
         paymentID = paymentID.toUpperCase()
         if (resposneCode !== '00') {

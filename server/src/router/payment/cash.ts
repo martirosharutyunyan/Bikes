@@ -4,13 +4,13 @@ const router = express.Router();
         
 router.post('/', async (req, res):Promise<void> => {
     try{
+        console.log(req.body)
         const { products, user } = req.body
         let Amount = 0
         for (let i:number = 0; i < products.length; i++) {
             Amount += products[i].price
         }
-        const codeOfProduct = JSON.stringify(products.map(e => e.codeOfProduct))
-        sendNotifications({ codeOfProduct, Amount, ...user }, 'CASH')
+        sendNotifications({ products:JSON.stringify(products), Amount, ...user }, 'CASH')
         res.send({ message: 'ok' })
     } catch(err:any){
         console.log(err);
