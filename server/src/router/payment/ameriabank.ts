@@ -15,7 +15,6 @@ router.post('/', async (req, res):Promise<void> => {
         for (let i:number = 0; i < products.length; i++) {
             Amount += products[i].price
         }
-        const codeOfProducts = products.map(elem => elem.codeOfProduct)
         const requestBody:AmeriabankRequest = {
             OrderID,
             Amount,
