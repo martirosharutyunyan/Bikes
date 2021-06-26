@@ -11,8 +11,7 @@ router.post('/buy', async (req, res) => {
         for (let i:number = 0; i < products.length; i++) {
             Amount += products[i].price
         }
-        const Description = products.map(elem => elem.productNameHY)
-        Idram.create({ description:JSON.stringify(Description), Amount, products: JSON.stringify(products), BILL_NO, paymentStatus:false, ...user })
+        Idram.create({ Amount, products: JSON.stringify(products), BILL_NO, paymentStatus:false, ...user })
         res.send({message:'ok'})
     } catch(err) {
         console.log(err)

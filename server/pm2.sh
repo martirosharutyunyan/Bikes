@@ -1,3 +1,4 @@
+git pull
 pm2 list
 read -p "Enter pm2 id: " ID
 pm2 stop ${ID}

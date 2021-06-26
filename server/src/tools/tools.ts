@@ -54,10 +54,10 @@ const promisify1arg = action => {
 }
 
 const promisify2arg = action => {
-    return (path:string, data:any) =>{
-        return new Promise((res, rej)=>{
+    return (path:string, data:any) => {
+        return new Promise((res, rej) => {
             action(path, data, (err:Error, data:Buffer) => {
-                if(err){
+                if (err) {
                     return rej(err)
                 }
                 res(data)
@@ -84,26 +84,33 @@ export const deleteImage = (pathToImage:string) => {
     unlink(`${img_path}/${pathToImage}`).catch(err => console.log(err))
 }
 
-export const sendNotifications = async (args, paymentMethod: 'IDRAM' | "VISA" | 'CASH') => {
+export const sendNotifications = async (args, paymentMethod: "IDRAM" | "VISA" | "CASH") => {
     const { products:strProducts } = args
     const products = JSON.parse(strProducts)
+    const data = await Promise.all(products.map(async e => {
+        const item = await Products.findProduct(e.codeOfProduct)
+        item.colors = e.colors
+        item.height = e.height
+        item.sizes = e.sizes
+        return item;
+    }))
     const messageForAdmin:nodemailerMessageType = {
         from:process.env.EMAIL,
         subject:'Պատվեր hecanivclub.am-ից',
         to:process.env.ADMINEMAIL,
-        html:mailText(args, products, paymentMethod)
+        // @ts-ignore
+        html:mailText(args, data, paymentMethod)
     }
     const messageForUser:nodemailerMessageType = {
         from:process.env.EMAIL,
         subject:'Պատվեր hecanivclub.am-ից',
         to:args.email,
-        html:mailText(args, products, paymentMethod, false)
+        // @ts-ignore
+        html:mailText(args, data, paymentMethod, false)
     }
     mailer(messageForAdmin)
     mailer(messageForUser)
 }
-let str = '';
-['#00FF00', '#4d19a7'].forEach(e => str += `<div style="width:500;height:500;background-color:${e}"><div/><br>`)
 
 const colors = {
     "#E3E3CD": 'Մարմնագույն',
@@ -125,7 +132,7 @@ export const mailText = (args:messageTextType, products:product[], paymentMethod
         const array = products.filter(product => product.productType === elem)
         let model = array.length === 1 ? 'Մոդելը՝ ' : 'Մոդելները՝ '
         array.forEach(elem => {
-            model += `Անունը՝ ${elem.productNameHY}, Գույնը՝ ${colors[elem.colors]}`
+            model += `Անունը՝ ${elem.productNameHY}, Գույնը՝ ${colors[elem.colors]}, Չափը՝ ${elem.sizes}, Բարձրությունը՝ ${elem.height}`
         })
         str += `Պատվերի տեսակը՝ ${elem}
 ${model}
