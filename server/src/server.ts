@@ -9,7 +9,7 @@ import fileupload from 'express-fileupload';
 import { sequelize } from './model/postgres';
 const app = express();
 const port:string | number = process.env.PORT ?? 8888;
-sequelize.authenticate().then(res => console.log('DB connected')).catch(console.error)
+sequelize.authenticate().then(console.log, console.error)
 proto()
 
 app.use(cors())
@@ -22,8 +22,5 @@ app.use(express.urlencoded({
 app.use('/api', require('./router/controller'))
 app.use('/public', express.static(path.join(__dirname, '../public')))
 
-app.get('/', (req, res) => {
-    res.send('ok')
-})
 
 app.listen(port, () => console.log(`server is running on port http://localhost:${port}`));
